@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)https://enplug.com/sdk/1.0.0/webpage-example.html -->
+<html ng-app="sdk" class="ng-scope"><script type="text/javascript">window["_gaUserPrefs"] = { ioo : function() { return true; } }</script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}</style>
+        <title>Events Board</title>
+        <!-- Latest compiled and minified bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+        <!-- We make our fonts available for use to match style -->
+        <link rel="stylesheet" href="https://enplug.com/assets/style/css/fonts.css">
+
+        <!-- AngularJS, a convenient framework for form-based applications -->
+        <script src="./epSDK_files/angular.min.js"></script>
+
+        <!-- $enplug service/SDK -->
+        <script src="./epSDK_files/angular-enplug.js"></script>
+
+        <!-- Test application -->
+        <script>
+            angular.module('sdk', ['enplug']).controller('SampleController', function ($scope, $enplug) {
+
+                $scope.assets = []; //Setting assets to a sane default, assets come as an array of objects
+
+                $scope.account = null; //Setting a sane default, account comes an object.
+
+                $scope.showAdvanced = false; //Sane default for the show advanced value, used to hide/show form fields.
+
+                /**
+                 * Initializing the object with known good values.
+                 * It is not necessary to do this, as the ng-model in the html will create these values as applicable.
+                 */
+                $scope.page = {
+                    Value: {
+                        ShowContent: 'url', // Show Content is used to hide/show the Url or Html form field based on the selection.
+                        Url: '', // The Url the web page back-end uses to display the content.
+                        Html: null, // If applicable, used to show custom HTML. Cannot be used in conjunction with the Url.
+                        ShowMobile: false, //If applicable, used to display the mobile version of the URL passed in.
+                        ShowDelay: null, //Custom delay between displaying the page after it's been loaded.
+                        RefreshInterval: null, // Custom refresh interval rate in X seconds.
+                        AllowJavascript: true, // Set to true by default, allows Javascript to be executed on the page.
+                        Username: '', // Username option, would need to write script passing in credientials.
+                        Password: '', // Password option, would need to write script passing in credientials.
+                        Token: '', // Token option, would need to wrtie script passing in credientials.
+                        JavascriptOnload: '' // Custom JS to be executed once the page loads, can be used to log into authenticated pages.
+                    }
+                };
+
+                /**
+                 * Error handling function, displays the error returned from any call
+                 * @param error
+                 */
+                function handleError(error) {
+                    window.alert('There was an error! ' + error);
+                }
+
+                /**
+                 * Toggles the advanced options, flips value for ng-show/hide within the form
+                 */
+                $scope.toggleAdvanced = function () {
+                    $scope.showAdvanced = !$scope.showAdvanced;
+                };
+
+                /**
+                 * Loads the account information. $scope value set to it's response so the object's properties are available in the HTML
+                 */
+                $scope.getAccount = function () {
+                    $enplug.getAccount(function (account) {
+                        console.log('Loaded account:', account);
+                        $scope.account = account;
+                    }, handleError);
+                };
+
+                /**
+                 * Loads the asssets for the application. Since this is a webpage extension, we only want to create a single 'page' asset.
+                 * Think of this page as the web-page(url, refresh rate, etc) you are passing to be displayed. You do not want to create a new page everytime but
+                 * rather you want to update the existing page.
+                 */
+                $scope.getAssets = function () {
+                    $enplug.getAssets(function (assets) {
+                        console.log('Loaded assets:', assets);
+                        if (assets.length) {
+                            $scope.page = assets[0];
+                            $scope.page.Value = assets[0].Value;
+                        }    
+                    }, handleError);
+                };
+
+                /**
+                 * Removes the asset completely. Used if the user wants to clear all data rather than updating existing asset.
+                 * @param assetId
+                 */
+                $scope.removeAsset = function (assetId) {
+                    $enplug.removeAsset(assetId, function () {
+                        console.log('Removed asset.');
+                        $scope.getAssets();
+                    }, handleError)
+                };
+
+                /**
+                 * If page exists, updates existing page otherwise creates new page.
+                 */
+                $scope.save = function () {
+                    if ($scope.page && $scope.page.Id) {
+                        $enplug.updateAsset($scope.page.Id, $scope.page.Value);
+                    } else {
+                        $enplug.createAsset('WebURL', $scope.page.Value);
+                    }
+                };
+
+                /**
+                 * Initialize by loading assets and account for immediate use in the page
+                 */
+                $scope.getAccount();
+                $scope.getAssets();
+            });
+
+
+        </script>
+
+        <!-- Applying Enplug fonts to make this page look like the Enplug Control application it runs in -->
+        <style type="text/css">
+            body {
+                font-family: 'Lato', Helvetica, Arial, sans-serif;
+                font-size: 14px;
+            }
+        </style>
+    <style id="style-1-cropbar-clipper">/* Copyright 2014 Evernote Corporation. All rights reserved. */
+.en-markup-crop-options {
+    top: 18px !important;
+    left: 50% !important;
+    margin-left: -100px !important;
+    width: 200px !important;
+    border: 2px rgba(255,255,255,.38) solid !important;
+    border-radius: 4px !important;
+}
+
+.en-markup-crop-options div div:first-of-type {
+    margin-left: 0px !important;
+}
+</style></head>
+
+    <!-- Using our controller defined above, we link it to the html -->
+    <body ng-controller="SampleController" class="ng-scope" cz-shortcut-listen="true">
+        <div class="container-fluid">
+                <header class="row">
+                <div class="col-sm-12">
+                    <h3>Sample Web Page Extension App</h3>
+
+                    <p>This is an app demonstrating the Javascript (AngularJS) SDK used in combination with the Web Page
+                        Extension back-end.</p>
+
+                    <p ng-show="account" class="ng-binding ng-hide">Account: Id:  -  Name: </p>
+                </div>
+            </header>
+            <div class="col-sm-12">
+                <form class="row ng-pristine ng-valid ng-valid-url" name="form">
+                    <div class="col-sm-9 well">
+
+                        <!-- General Settings -->
+                        <div class="form-group" style="margin-bottom: 10px; margin-top: 10px;">
+                            <input type="radio" name="showUrl" id="showUrl" value="url" ng-model="page.Value.ShowContent" class="ng-pristine ng-untouched ng-valid">
+                            <label for="showUrl">Website URL</label>
+                        </div>
+
+                        <!-- Here is an example of AngularJS's ng-show. We use a radio button to change the value of ShowContent in order to reveal the form field.
+                          In our controller, we specified that you can only pass a URL or HTML. Using ng-change, we clear the other form field in order to prevent
+                          both fields being sent as properties on the Asset.-->
+                        <div class="form-group" style="margin-bottom: 10px;" ng-show="page.Value.ShowContent === &#39;url&#39; &amp;&amp; page.Value.ShowContent !==&#39;html&#39;">
+                            <div class="input-group" style="display: block;">
+                                <input type="url" id="inputUrl" class="form-control ng-pristine ng-untouched ng-valid ng-valid-url" style="border-radius: 4px;" name="inputUrl" placeholder="ex: http://developers.enplug.com" ng-change="selectUrl()" ng-model="page.Value.Url">
+                            </div>
+                            <p class="help-block">Your url must include http:// or https://</p>
+                        </div>
+
+                        <!-- HTML Option -->
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <input type="radio" name="showHtml" id="showHtml" value="html" ng-model="page.Value.ShowContent" ng-change="selectHtml()" class="ng-pristine ng-untouched ng-valid">
+                            <label for="showHtml">Custom HTML</label>
+                        </div>
+                        <div class="form-group ng-hide" style="margin-bottom: 10px;" ng-show="page.Value.ShowContent === &#39;html&#39; &amp;&amp; page.Value.ShowContent !== &#39;url&#39;">
+                            <textarea class="form-control ng-pristine ng-untouched ng-valid" id="customHtml" placeholder="Custom Html" ng-model="page.Value.Html"></textarea>
+                        </div>
+
+                        <!-- Advanced Settings -->
+                        <!-- Using AngularJS click function to flip the value of showAdvanced used in the Appearance Settings section of the form -->
+                        <div class="form-group" style="margin-bottom: 20px; margin-top: 10px;">
+                            <a ng-click="toggleAdvanced()"><span ng-bind="showAdvanced ? &#39;Hide&#39; : &#39;Show&#39;" class="ng-binding">Show</span> Advanced Settings</a>
+                        </div>
+
+                        <!-- Appearance Settings -->
+                        <div ng-show="showAdvanced" class="ng-hide">
+                            <div class="form-group" style="margin-bottom: 10px;">
+                                <h4>Appearance</h4>
+                            </div>
+
+                            <!-- Toggles the ability to show Desktop View or if checked, Mobile View of the website -->
+                            <div class="form-group" style="margin-bottom: 10px;">
+                                <input type="checkbox" name="showMobile" id="showMobile" value="true" ng-model="page.Value.RenderMobileWebsite" class="ng-pristine ng-untouched ng-valid">
+                                <label for="showMobile">Show Mobile Site</label>
+                            </div>
+
+                            <!-- This is the delay, in seconds, that you can pass to force a delay between page loading and appearing on the screen. -->
+                            <div class="form-group" style="margin-bottom: 10px;">
+                                <label for="inputDelayInterval">Delay Interval (seconds)</label>
+                                <input type="number" class="form-control ng-pristine ng-untouched ng-valid" placeholder="Delay in seconds" id="inputDelayInterval" ng-model="page.Value.ShowDelay">
+                            </div>
+
+                            <!-- This is how often you want the page to refresh, in seconds. -->
+                            <div class="form-group" style="margin-bottom: 10px;">
+                                <label for="inputRefreshInterval">Refresh Interval (seconds)</label>
+                                <input type="number" class="form-control ng-pristine ng-untouched ng-valid" id="inputRefreshInterval" placeholder="Number of seconds before refreshing web page" ng-model="page.Value.RefreshInterval">
+                            </div>
+
+                            <!-- Javascript Settings -->
+                            <div class="form-group" style="margin-bottom: 10px; margin-top: 20px;">
+                                <h4>Javascript</h4>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 10px; margin-top: 10px;">
+                                <input type="checkbox" id="inputAllowJavascript" ng-model="page.Value.AllowJavascript" class="ng-pristine ng-untouched ng-valid">
+                                <label for="inputAllowJavascript">Allow Javascript</label>
+                            </div>
+
+                            <!-- Here you can use these pre-defined Username, Password and Token fields for use in websites that need authorization.
+                            An example script for a popular app, Bonfyre, is provided in the SDK Guide. -->
+                            <div ng-show="page.Value.AllowJavascript">
+                                <div class="form-group" style="margin-bottom: 10px;">
+                                    <label for="inputUsername">Username</label>
+                                    <input type="text" class="form-control ng-pristine ng-untouched ng-valid" id="inputUsername" placeholder="Username" ng-model="page.Value.Username">
+                                </div>
+                                <div class="form-group" style="margin-bottom: 10px;">
+                                    <label for="inputPassword">Password</label>
+                                    <input type="password" class="form-control ng-pristine ng-untouched ng-valid" id="inputPassword" placeholder="Password" ng-model="page.Value.Password">
+                                </div>
+                                <div class="form-group" style="margin-bottom: 10px;">
+                                    <label for="inputToken">Token</label>
+                                    <input type="text" class="form-control ng-pristine ng-untouched ng-valid" id="inputToken" placeholder="Token" ng-model="page.Value.Token">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputJavascriptOnload">Run Custom Javascript</label>
+                                    <textarea class="form-control ng-pristine ng-untouched ng-valid" id="inputJavascriptOnload" placeholder="Javascript Onload" ng-model="page.Value.JavascriptOnload"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- The Remove Asset call takes the Id of the asset, and we pass it in here -->
+                        <button class="btn btn-danger btn-sm pull-left" ng-click="removeAsset(page.Id)">Delete</button>
+
+                        <!-- AngularJS provides basic form validation, we use it here in order to make sure that at the very least the URL or HTML field is filled out -->
+                        <button class="btn btn-success btn-sm" style="margin-left: 10px;" ng-click="save()" ng-disabled="form.$invalid">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    
+
+</body></html>
