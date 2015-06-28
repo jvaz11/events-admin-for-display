@@ -7,7 +7,7 @@ window["_gaUserPrefs"] = {
     }
 }
 </script>
-
+ 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <style type="text/css">
@@ -21,7 +21,7 @@ window["_gaUserPrefs"] = {
     .ng-hide:not(.ng-hide-animate) {
         display: none !important;
     }
-    
+    /*Comment out*/
     ng\:form {
         display: block;
     }
@@ -214,7 +214,7 @@ window["_gaUserPrefs"] = {
                     <br>
                 
                     <!-- The Remove Asset call takes the Id of the asset, and we pass it in here -->
-                    <button class="btn btn-danger btn-sm pull-left" ng-click="removeAsset(page.Id)">Delete</button>
+                    <button class="btn btn-danger btn-sm pull-left" ng-click="removeAsset(page.Id)">Delete this and that</button>
                     <!-- AngularJS provides basic form validation, we use it here in order to make sure that at the very least the URL or HTML field is filled out -->
                     <button class="btn btn-success btn-sm" style="margin-left: 10px;" ng-click="createBoard()" ng-disabled="form.$invalid">Save</button>
                 </div>
