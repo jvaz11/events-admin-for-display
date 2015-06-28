@@ -86,7 +86,7 @@ window["_gaUserPrefs"] = {
                         // Keep board ID to generate unique URL for this board
                         var newBoardId = id;
                         // Generate 'url' property for asset object. Use AngularFire + route params
-                        $scope.page.Value.Url = "https://eventsboard.firebaseio.com/boards/" + newBoardId + "/slides";
+                        $scope.page.Value.Url = "https://upcomingevents.firebaseapp.com/#/display/" + newBoardId;
                         console.log("Set url to " + $scope.page.Value.Url);
                         // Redirect to app display
                         // $location.path('https://eventsboard.firebaseio.com/boards/-JsrWmm21vh4grLC-wRP/slides');
