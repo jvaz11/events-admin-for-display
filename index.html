@@ -1,5 +1,10 @@
+<!--
+* INSPINIA - Responsive Admin Theme
+* Version 2.2
+*
+-->
 <!DOCTYPE html>
-<html ng-app="eventsBoard" class="ng-scope">
+<html ng-app="eventsBoard">
 <script type="text/javascript">
 window["_gaUserPrefs"] = {
     ioo: function() {
@@ -7,9 +12,9 @@ window["_gaUserPrefs"] = {
     }
 }
 </script>
- 
+
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
     <style type="text/css">
     @charset "UTF-8";
     [ng\:cloak],
@@ -22,183 +27,9 @@ window["_gaUserPrefs"] = {
         display: none !important;
     }
     /*Comment out*/
+    
     ng\:form {
         display: block;
-    }
-    </style>
-    <title>Events Board</title>
-    <!-- Latest compiled and minified bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <!-- We make our fonts available for use to match style -->
-    <link rel="stylesheet" href="https://enplug.com/assets/style/css/fonts.css">
-    <!-- AngularJS, a convenient framework for form-based applications -->
-    <!-- $enplug service/SDK -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.13/angular.js"></script>
-    <script src="./epSDK_files/angular-enplug.js"></script>
-    <!-- Firebase -->
-    <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
-    <!-- AngularFire -->
-    <script src="https://cdn.firebase.com/libs/angularfire/1.1.1/angularfire.min.js"></script>
-    <!-- Test application -->
-    <script>
-    angular.module('eventsBoard', ['enplug', 'firebase'])
-        // .config(function($routeProvider) {
-        //     $routeProvider
-        //         .when('/display', {
-        //             templateUrl: 'display.html',
-        //             controller: 'MainCtrl'
-        //         })
-        //         .when('/display/:boardid', {
-        //             templateUrl: 'display.html',
-        //             controller: 'MainCtrl'
-        //         })
-        //         .when('/admin', {
-        //             templateUrl: 'views/admin.html',
-        //             controller: 'EventController'
-        //         })
-        //         .when('/post', {
-        //             templateUrl: 'views/post.html',
-        //             controller: 'EventController'
-        //         })
-        //         .when('/edit/:taskId', {
-        //             templateUrl: 'views/edit.html',
-        //             controller: 'TaskController'
-        //         })
-        //         .otherwise({
-        //             redirectTo: '/'
-        //         });
-        // })
-        .controller('SampleController', function($scope, $enplug, $firebaseArray, $location) {
-            // Firebase reference
-            var ref = new Firebase("https://eventsboard.firebaseio.com/boards");
-            // Create a synchronized array
-            var boards = $firebaseArray(ref);
-            // Add a board
-            $scope.createBoard = function() {
-                boards.$add({
-                        name: $scope.newBoardName
-                    })
-                    .then(function(ref) {
-                        // Get Firebase key
-                        var id = ref.key();
-                        // Log success
-                        console.log("added record with id " + id);
-                        // Keep board ID to generate unique URL for this board
-                        var newBoardId = id;
-                        // Generate 'url' property for asset object. Use AngularFire + route params
-                        $scope.page.Value.Url = "https://upcomingevents.firebaseapp.com/#/display/" + newBoardId;
-                        console.log("Set url to " + $scope.page.Value.Url);
-                        // Redirect to app display
-                        // $location.path('https://eventsboard.firebaseio.com/boards/-JsrWmm21vh4grLC-wRP/slides');
-                        // Give the scope the configured board's object as an array. If this value is true, the dom will hide the new board name input field. 
-                        // $scope.configuredBoard = newBoardId;
-                        // Save new asset (this was originally called in the config view.)
-                        // Comment out this function call during dev
-                        // $scope.save();
-                    });
-            };
-
-
-            $scope.assets = []; //Setting assets to a sane default, assets come as an array of objects
-
-            $scope.account = null; //Setting a sane default, account comes an object.
-
-            $scope.showAdvanced = false; //Sane default for the show advanced value, used to hide/show form fields.
-
-            /**
-             * Initializing the object with known good values.
-             * It is not necessary to do this, as the ng-model in the html will create these values as applicable.
-             */
-            $scope.page = {
-                Value: {
-                    ShowContent: 'url', // Show Content is used to hide/show the Url or Html form field based on the selection.
-                    Url: '', // The Url the web page back-end uses to display the content.
-                    Html: null, // If applicable, used to show custom HTML. Cannot be used in conjunction with the Url.
-                    ShowMobile: false, //If applicable, used to display the mobile version of the URL passed in.
-                    ShowDelay: null, //Custom delay between displaying the page after it's been loaded.
-                    RefreshInterval: null, // Custom refresh interval rate in X seconds.
-                    AllowJavascript: true, // Set to true by default, allows Javascript to be executed on the page.
-                    Username: '', // Username option, would need to write script passing in credientials.
-                    Password: '', // Password option, would need to write script passing in credientials.
-                    Token: '', // Token option, would need to wrtie script passing in credientials.
-                    JavascriptOnload: '' // Custom JS to be executed once the page loads, can be used to log into authenticated pages.
-                }
-            };
-
-            /**
-             * Error handling function, displays the error returned from any call
-             * @param error
-             */
-            function handleError(error) {
-                window.alert('There was an error! ' + error);
-            };
-
-            /**
-             * Toggles the advanced options, flips value for ng-show/hide within the form
-             */
-            $scope.toggleAdvanced = function() {
-                $scope.showAdvanced = !$scope.showAdvanced;
-            };
-
-            /**
-             * Loads the account information. $scope value set to it's response so the object's properties are available in the HTML
-             */
-            $scope.getAccount = function() {
-                $enplug.getAccount(function(account) {
-                    console.log('Loaded account:', account);
-                    $scope.account = account;
-                }, handleError);
-            };
-
-            /**
-             * Loads the asssets for the application. Since this is a webpage extension, we only want to create a single 'page' asset.
-             * Think of this page as the web-page(url, refresh rate, etc) you are passing to be displayed. You do not want to create a new page everytime but
-             * rather you want to update the existing page.
-             */
-            $scope.getAssets = function() {
-                $enplug.getAssets(function(assets) {
-                    console.log('Loaded assets:', assets);
-                    if (assets.length) {
-                        $scope.page = assets[0];
-                        $scope.page.Value = assets[0].Value;
-                    }
-                }, handleError);
-            };
-
-            /**
-             * Removes the asset completely. Used if the user wants to clear all data rather than updating existing asset.
-             * @param assetId
-             */
-            $scope.removeAsset = function(assetId) {
-                $enplug.removeAsset(assetId, function() {
-                    console.log('Removed asset.');
-                    $scope.getAssets();
-                }, handleError)
-            };
-
-            /**
-             * If page exists, updates existing page otherwise creates new page.
-             */
-            $scope.save = function() {
-                if ($scope.page && $scope.page.Id) {
-                    $enplug.updateAsset($scope.page.Id, $scope.page.Value);
-                } else {
-                    $enplug.createAsset('WebURL', $scope.page.Value);
-                }
-            };
-
-            /**
-             * Initialize by loading assets and account for immediate use in the page
-             */
-            // $scope.getAccount();
-            // $scope.getAssets();
-        });
-    </script>
-    <!-- Applying Enplug fonts to make this page look like the Enplug Control application it runs in -->
-    <style type="text/css">
-    body {
-        font-family: 'Lato', Helvetica, Arial, sans-serif;
-        font-size: 14px;
     }
     </style>
     <style id="style-1-cropbar-clipper">
@@ -216,38 +47,63 @@ window["_gaUserPrefs"] = {
     .en-markup-crop-options div div:first-of-type {
         margin-left: 0px !important;
     }
-    </style>
-</head>
-<!-- Using our controller defined above, we link it to the html -->
 
-<body ng-controller="SampleController" class="ng-scope" cz-shortcut-listen="true">
-    <div class="container-fluid">
-        <header class="row">
-            <div class="col-sm-12">
-                <h3>Set up your Events Board</h3>
-                <a ng-href="{{page.Value.Url}}">Preview</a>
-                <p ng-show="account" class="ng-binding ng-hide">Account: Id: - Name: </p>
-            </div>
-        </header>
-        <div class="col-sm-12">
-            <form class="row ng-pristine ng-valid ng-valid-url" name="form">
-                <div class="col-sm-9 well">
-                    <div class="form-group" style="margin-bottom: 30px;" ng-hide="page.Value.Url">
-                        <div class="input-group" style="display: block;">
-                            <input type="text" id="newBoardName" class="form-control ng-pristine ng-untouched ng-valid" style="border-radius: 4px;" name="newBoardName" placeholder="Examples: Upcoming Events, Catered Lunch Schedule, Birthdays" ng-model="newBoardName">
-                        </div>
-                    </div>
-                    <br>
-                    <!-- The Remove Asset call takes the Id of the asset, and we pass it in here -->
-                    <button class="btn btn-danger btn-sm pull-left" ng-click="removeAsset(page.Id)">Delete this and that</button>
-                    <!-- AngularJS provides basic form validation, we use it here in order to make sure that at the very least the URL or HTML field is filled out -->
-                    <button class="btn btn-success btn-sm" style="margin-left: 10px;" ng-click="createBoard()" ng-disabled="form.$invalid">Save</button>
-                </div>
-            </form>
-        </div>
-        $scope.newBoardName: {{newBoardName | json}}
-        <br> $scope.page.Value.Url: {{page.Value.Url | json}}
-    </div>
+    .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Page title set in pageTitle directive -->
+    <title page-title>Events Board</title>
+    <!-- Font awesome -->
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+    <!-- Bootstrap and Fonts -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/ui-bootstrap-csp.css"></script>
+
+    <!-- Main Inspinia CSS files -->
+    <link href="css/animate.css" rel="stylesheet">
+    <link id="loadBefore" href="css/style.css" rel="stylesheet">
+</head>
+<!-- ControllerAs syntax -->
+<!-- Main controller with serveral data used in Inspinia theme on diferent view -->
+
+<body ng-controller="MainCtrl">
+    <!-- Main view  -->
+    <div ui-view></div>
+    <!-- jQuery and Bootstrap -->
+    <script src="js/jquery/jquery-2.1.1.min.js"></script>
+    <script src="js/plugins/jquery-ui/jquery-ui.js"></script>
+    <script src="js/bootstrap/bootstrap.min.js"></script>
+
+    <!-- MetsiMenu -->
+    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <!-- SlimScroll -->
+    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <!-- Peace JS -->
+    <script src="js/plugins/pace/pace.min.js"></script>
+    <!-- Custom and plugin javascript -->
+    <script src="js/inspinia.js"></script>
+    <!-- Main Angular scripts-->
+    <script src="js/angular/angular.min.js"></script>
+    <script src="js/plugins/oclazyload/dist/ocLazyLoad.min.js"></script>
+    <script src="js/ui-router/angular-ui-router.min.js"></script>
+ // <script src="js/bootstrap/ui-bootstrap-tpls.js"></script>
+ <!-- // <script src="js/angular/angular-strap.min.js"></script> -->
+ <!-- // <script src="js/angular/angular-strap.tpl.min.js"></script> -->
+
+    <!-- Firebase -->
+    <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+    <!-- AngularFire -->
+    <script src="https://cdn.firebase.com/libs/angularfire/1.1.1/angularfire.min.js"></script>
+    <!-- Enplug -->
+<!--  <script src="js/angular-enplug.js"></script> -->
+    <!-- // <script src="js/plugins/datapicker/angular-datepicker.js"></script> -->
+
+
+    <!-- Anglar App Script -->
+    <script src="js/app.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/directives.js"></script>
+    <script src="js/controllers.js"></script>
 </body>
 
 </html>
