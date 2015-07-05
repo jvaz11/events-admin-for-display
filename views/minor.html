@@ -33,7 +33,7 @@
                                 <label class="col-sm-2 control-label">Date</label>
                                 <div class="col-sm-4">
                                     <p class="input-group">
-                                        <input type="text"  class="form-control" datepicker-popup="{{format}}" ng-model="newEvent.date" is-open="opened" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="false" close-text="Close" />
+                                        <input type="date"  class="form-control" datepicker-popup="{{format}}" ng-model="newEvent.date" is-open="opened" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="false" close-text="Close" />
                                         <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
               </span>
@@ -68,7 +68,7 @@
                                     <h2>{{ event.name }}</h2>
                                     <medium style="text-navy">{{ event.date | date:"fullDate"}}</medium>
                                     <br/>
-                                    <medium class="text-navy">{{ event.time | date:"H:mm a"}}</medium>
+                                    <medium class="text-navy">{{ event.time | date:"hh:mm a"}}</medium>
                                 </div>
                                 <div class="col-xs-3 date">
                                     <a ng-click="remove(event)"><i class="fa fa-times fa-3x deletex"></i></a>

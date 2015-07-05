@@ -269,12 +269,7 @@ function SampleController($scope, $firebaseArray, $location, $log, $filter) {
     // datepicker 
 
     $scope.today = function() {
-        $scope.newEvent = {
-            name: "",
-            date: new Date(),
-
-            time: new Date()
-        };
+        $scope.newEvent.date = new Date();
     };
     $scope.today();
 
@@ -304,29 +299,13 @@ function SampleController($scope, $firebaseArray, $location, $log, $filter) {
         startingDay: 1
     };
 
-    $scope.format = 'MM/dd/yyyy';
+    // $scope.format = 'MM/dd/yyyy';
 
     var tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     var afterTomorrow = new Date();
     afterTomorrow.setDate(tomorrow.getDate() + 2);
 
-
-    $scope.getDayClass = function(date, mode) {
-        if (mode === 'day') {
-            var dayToCheck = new Date(date).setHours(0, 0, 0, 0);
-
-            for (var i = 0; i < $scope.events.length; i++) {
-                var currentDay = new Date($scope.events[i].date).setHours(0, 0, 0, 0);
-
-                if (dayToCheck === currentDay) {
-                    return $scope.events[i].status;
-                }
-            }
-        }
-
-        return '';
-    };
 
 
 };
