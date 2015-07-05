@@ -1,4 +1,7 @@
 <div class="wrapper wrapper-content animated fadeInRight">
+    <div class="panel">
+
+    </div>
     <div class="row">
         <div class="col-lg-12">
             <div class="text-center m-t-lg">
@@ -9,95 +12,6 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid">
-        <header class="row">
-            <div class="col-sm-12">
-                <h3>Set up your Events Board</h3>
-                <a ng-href="{{page.Value.Url}}">Preview</a>
-                <p ng-show="account" class="ng-binding ng-hide">Account: Id: - Name: </p>
-            </div>
-        </header>
-        <div class="col-sm-12">
-            <form class="row ng-pristine ng-valid ng-valid-url" name="form">
-                <div class="col-sm-9 well">
-                    <div class="form-group" style="margin-bottom: 30px;" ng-hide="page.Value.Url">
-                        <div class="input-group" style="display: block;">
-                            <input type="text" id="newBoardName" class="form-control ng-pristine ng-untouched ng-valid" style="border-radius: 4px;" name="newBoardName" placeholder="Examples: Upcoming Events, Catered Lunch Schedule, Birthdays" ng-model="newBoardName">
-                        </div>
-                    </div>
-                    <br>
-                    <!-- The Remove Asset call takes the Id of the asset, and we pass it in here -->
-                    <button class="btn btn-danger btn-sm pull-left" ng-click="removeAsset(page.Id)">Delete this and that</button>
-                    <!-- AngularJS provides basic form validation, we use it here in order to make sure that at the very least the URL or HTML field is filled out -->
-                    <button class="btn btn-success btn-sm" style="margin-left: 10px;" ng-click="createBoard()" ng-disabled="form.$invalid">Save</button>
-                </div>
-            </form>
-        </div>
-        $scope.newBoardName: {{newBoardName | json}}
-        <br> $scope.page.Value.Url: {{page.Value.Url | json}}
-    </div>
-    <hr />
-    <pre>Selected date is: <em>{{dt | date:'fullDate' }}</em></pre>
-    <!-- 
-    <h4>Inline</h4>
-    <div style="display:inline-block; min-height:290px;">
-      <datepicker ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm" custom-class="getDayClass(date, mode)"></datepicker>
-    </div> -->
-    <h4>Popup</h4>
-    <div class="row">
-        <div class="col-md-6">
-            <p class="input-group">
-                <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-                <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-              </span>
-            </p>
-        </div>
-    </div>
-    <hr />
-    <timepicker ng-model="mytime" ng-change="changed()" hour-step="1" minute-step="5" show-meridian="ismeridian"></timepicker>
-    <pre class="alert alert-info">Time is: {{mytime | date:'shortTime' }}</pre>
-    <div class="row">
-        <div class="col-xs-6">
-            Hours step is:
-            <select class="form-control" ng-model="hstep" ng-options="opt for opt in options.hstep"></select>
-        </div>
-        <div class="col-xs-6">
-            Minutes step is:
-            <select class="form-control" ng-model="mstep" ng-options="opt for opt in options.mstep"></select>
-        </div>
-    </div>
-    <hr>
-    <button class="btn btn-info" ng-click="toggleMode()">12H / 24H</button>
-    <button class="btn btn-default" ng-click="update()">Set to 14:00</button>
-    <button class="btn btn-danger" ng-click="clear()">Clear</button>
-    <form ng-submit="saveEvent()">
-        <input ng-model="newEvent.name" />
-        <button type="submit">Add</button>
-    </form>
-    <table class="table table-full m-b-60" id="table-area-1">
-        <thead>
-            <tr fsm-sticky-header scroll-body="'#table-area-1'" scroll-stop="64">
-                <!--  <th>
-                        <input type="checkbox" class="relative" ng-model="selectAll" ng-click="checkAll()" />
-                    </th> -->
-                <th>Name</th>
-                <th>Date and Time</th>
-                <th class="text-right">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="event in eventslides">
-                <td>{{ event.name }}</td>
-                <td>Friday July 3rd, 2015</td>
-                <td class="text-right">
-                    <button type="button" class="btn btn-link btn-round" data-title="Edit event" ng-click="editEvent(event)"><i class="md md-edit"></i></button>
-                    <button type="button" class="btn btn-link btn-round" data-title="Delete event" ng-click="remove(event)"><i class="md md-delete"></i></button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <hr/>
     <div class="wrapper wrapper-content">
         <div class="row">
             <div class="col-lg-12">
@@ -108,19 +22,18 @@
                     <div class="ibox-content">
                         <form method="get" class="form-horizontal" ng-submit="saveEvent()">
                             <div class="row">
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Name</label>
-                                <div class="col-sm-10">
-                                    <input type="text" ng-model="newEvent.name" class="form-control"><span class="help-block m-b-none">This is the title of your event that will appear on the slide.</span>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Name</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" ng-model="newEvent.name" class="form-control"><span class="help-block m-b-none">This is the title of your event that will appear on the slide.</span>
+                                    </div>
                                 </div>
                             </div>
-                            </div>
-                            <div class="hr-line-dashed"></div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Date</label>
                                 <div class="col-sm-4">
                                     <p class="input-group">
-                                        <input type="text" ng-model="newEvent.date" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                                        <input type="text"  class="form-control" datepicker-popup="{{format}}" ng-model="newEvent.date" is-open="opened" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="false" close-text="Close" />
                                         <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
               </span>
@@ -128,17 +41,15 @@
                                 </div>
                                 <label class="col-sm-2 control-label">Time</label>
                                 <div class="col-sm-4">
-                                        <timepicker ng-model="newEvent.time" ng-change="changed()" hour-step="1" minute-step="5" show-meridian="ismeridian"></timepicker>
+                                    <timepicker ng-model="newEvent.time" ng-change="changed()" hour-step="1" minute-step="5" show-meridian="ismeridian"></timepicker>
                                 </div>
                             </div>
-                                                        <div class="hr-line-dashed"></div>
-
-                        <div class="form-group">
-                            <div class="col-sm-4 col-sm-offset-2">
-                                <button class="btn btn-white" type="submit">Cancel</button>
-                                <button class="btn btn-primary" type="submit">Save changes</button>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-white" type="submit">Cancel</button>
+                                    <button class="btn btn-primary" type="submit">Save changes</button>
+                                </div>
                             </div>
-                        </div>
                         </form>
                     </div>
                 </div>
@@ -151,16 +62,16 @@
                         <h5>Upcoming Events</h5>
                     </div>
                     <div class="ibox-content inspinia-timeline">
-                        <div class="timeline-item">
+                        <div class="timeline-item" ng-repeat="event in events">
                             <div class="row">
                                 <div class="col-xs-6 content no-top-border">
-                                    <h2>Meeting</h2>
-                                    <medium style="text-navy">Monday July 25, 2015</medium>
+                                    <h2>{{ event.name }}</h2>
+                                    <medium style="text-navy">{{ event.date | date:"fullDate"}}</medium>
                                     <br/>
-                                    <medium class="text-navy">9:00pm</medium>
+                                    <medium class="text-navy">{{ event.time | date:"H:mm a"}}</medium>
                                 </div>
                                 <div class="col-xs-3 date">
-                                    <a ng-click="closebox()"><i class="fa fa-times fa-3x deletex"></i></a>
+                                    <a ng-click="remove(event)"><i class="fa fa-times fa-3x deletex"></i></a>
                                 </div>
                             </div>
                         </div>

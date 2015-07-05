@@ -1,0 +1,16 @@
+        <div class="col-sm-12">
+            <form class="row ng-pristine ng-valid ng-valid-url" name="form">
+                <div class="col-sm-9 well">
+                    <div class="form-group" style="margin-bottom: 30px;" ng-hide="page.Value.Url">
+                        <div class="input-group" style="display: block;">
+                            <input type="text" id="newBoardName" class="form-control ng-pristine ng-untouched ng-valid" style="border-radius: 4px;" name="newBoardName" placeholder="Examples: Upcoming Events, Catered Lunch Schedule, Birthdays" ng-model="newBoardName">
+                        </div>
+                    </div>
+                    <br>
+                    <!-- The Remove Asset call takes the Id of the asset, and we pass it in here -->
+                    <button class="btn btn-danger btn-sm pull-left" ng-click="removeAsset(page.Id)">Delete this and that</button>
+                    <!-- AngularJS provides basic form validation, we use it here in order to make sure that at the very least the URL or HTML field is filled out -->
+                    <button class="btn btn-success btn-sm" style="margin-left: 10px;" ng-click="createBoard()" ng-disabled="form.$invalid">Save</button>
+                </div>
+            </form>
+        </div>
