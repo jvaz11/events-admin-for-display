@@ -101,6 +101,7 @@ function SampleController($scope, $firebaseArray, $location, $log, $filter) {
 
     var events = $scope.events;
 
+
     var getDateTime = function() {
         var date = $scope.newEvent.date;
         var newdate = new Date(date);
@@ -122,19 +123,22 @@ function SampleController($scope, $firebaseArray, $location, $log, $filter) {
             sec = "0" + sec;
 
         var datestring = month + '/' + day + '/' + year;
-        var timestring = hour + ':' + min + ':' + sec;
+        var timestring = hour + ':' + min + ':' + sec + ' GMT-0700 (PDT)';
+
+
 
         var datetimestring = datestring + ' ' + timestring;
 
-        return datetimestring;
+        datetimestring = new Date(datetimestring);
 
+        return datetimestring;
 
         datestring = $filter('date')(datetimestring, 'EEE MMM dd yyyy');
         timestring = $filter('date')(datetimestring, 'hh:mm:ss');
 
 
 
-        // datetimestring = datetimestring.getTime();
+
 
 
         console.log(month + '/' + day + '/' + year + ' ' + hour + ':' + min + ':' + sec);
@@ -150,7 +154,9 @@ function SampleController($scope, $firebaseArray, $location, $log, $filter) {
         newEvent.time = newtime.getTime();
         var newdate = $scope.newEvent.date;
         newEvent.date = newdate.getTime();
-        newEvent.datetime = getDateTime();
+        var dtstring = getDateTime();
+        newEvent.datetime = dtstring.getTime();
+
 
         // newEvent.date = $scope.newEvent.date.toString();
         // newEvent.fullDate = $filter('date')($scope.newEvent.date, 'fullDate');

@@ -62,13 +62,13 @@
                         <h5>Upcoming Events</h5>
                     </div>
                     <div class="ibox-content inspinia-timeline">
-                        <div class="timeline-item" ng-repeat="event in events">
+                        <div class="timeline-item" ng-repeat="event in events | orderBy:'dateTime':false">
                             <div class="row">
                                 <div class="col-xs-6 content no-top-border">
                                     <h2>{{ event.name }}</h2>
-                                    <medium style="text-navy">{{ event.date | date:"fullDate"}}</medium>
+                                    <medium style="text-navy">{{ event.datetime | date:"fullDate"}}</medium>
                                     <br/>
-                                    <medium class="text-navy">{{ event.time | date:"hh:mm a"}}</medium>
+                                    <medium class="text-navy">{{ event.datetime | date:"hh:mm a"}}</medium>
                                 </div>
                                 <div class="col-xs-3 date">
                                     <a ng-click="remove(event)"><i class="fa fa-times fa-3x deletex"></i></a>
