@@ -129,6 +129,8 @@ function SampleController($scope, $firebaseArray, $location, $log, $filter) {
 
         var datetimestring = datestring + ' ' + timestring;
 
+        $scope.datetimestring = datetimestring;
+
         datetimestring = new Date(datetimestring);
 
         return datetimestring;
@@ -156,6 +158,7 @@ function SampleController($scope, $firebaseArray, $location, $log, $filter) {
         newEvent.date = newdate.getTime();
         var dtstring = getDateTime();
         newEvent.datetime = dtstring.getTime();
+        newEvent.datetimestring = $scope.datetimestring;
 
 
         // newEvent.date = $scope.newEvent.date.toString();
