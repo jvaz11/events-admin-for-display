@@ -9,8 +9,7 @@
             </div>
         </div>
     </div>
-
- <div class="container-fluid">
+    <div class="container-fluid">
         <header class="row">
             <div class="col-sm-12">
                 <h3>Set up your Events Board</h3>
@@ -38,64 +37,45 @@
         <br> $scope.page.Value.Url: {{page.Value.Url | json}}
     </div>
     <hr />
-    
-
     <pre>Selected date is: <em>{{dt | date:'fullDate' }}</em></pre>
-<!-- 
+    <!-- 
     <h4>Inline</h4>
     <div style="display:inline-block; min-height:290px;">
       <datepicker ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm" custom-class="getDayClass(date, mode)"></datepicker>
     </div> -->
-
     <h4>Popup</h4>
     <div class="row">
         <div class="col-md-6">
             <p class="input-group">
-              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-              <span class="input-group-btn">
+                <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
               </span>
             </p>
         </div>
-
-        
     </div>
-
-
     <hr />
-   
-<timepicker ng-model="mytime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
-
-  <pre class="alert alert-info">Time is: {{mytime | date:'shortTime' }}</pre>
-
-  <div class="row"> 
-    <div class="col-xs-6">
-        Hours step is:
-      <select class="form-control" ng-model="hstep" ng-options="opt for opt in options.hstep"></select>
+    <timepicker ng-model="mytime" ng-change="changed()" hour-step="1" minute-step="5" show-meridian="ismeridian"></timepicker>
+    <pre class="alert alert-info">Time is: {{mytime | date:'shortTime' }}</pre>
+    <div class="row">
+        <div class="col-xs-6">
+            Hours step is:
+            <select class="form-control" ng-model="hstep" ng-options="opt for opt in options.hstep"></select>
+        </div>
+        <div class="col-xs-6">
+            Minutes step is:
+            <select class="form-control" ng-model="mstep" ng-options="opt for opt in options.mstep"></select>
+        </div>
     </div>
-    <div class="col-xs-6">
-        Minutes step is:
-      <select class="form-control" ng-model="mstep" ng-options="opt for opt in options.mstep"></select>
-    </div>
-  </div>
-
-  <hr>
-
-  <button class="btn btn-info" ng-click="toggleMode()">12H / 24H</button>
-  <button class="btn btn-default" ng-click="update()">Set to 14:00</button>
-  <button class="btn btn-danger" ng-click="clear()">Clear</button>
-
-
-
- <form ng-submit="saveEvent()">
+    <hr>
+    <button class="btn btn-info" ng-click="toggleMode()">12H / 24H</button>
+    <button class="btn btn-default" ng-click="update()">Set to 14:00</button>
+    <button class="btn btn-danger" ng-click="clear()">Clear</button>
+    <form ng-submit="saveEvent()">
         <input ng-model="newEvent.name" />
         <button type="submit">Add</button>
-
     </form>
-
-
-
-     <table class="table table-full m-b-60" id="table-area-1">
+    <table class="table table-full m-b-60" id="table-area-1">
         <thead>
             <tr fsm-sticky-header scroll-body="'#table-area-1'" scroll-stop="64">
                 <!--  <th>
@@ -108,7 +88,6 @@
         </thead>
         <tbody>
             <tr ng-repeat="event in eventslides">
-            
                 <td>{{ event.name }}</td>
                 <td>Friday July 3rd, 2015</td>
                 <td class="text-right">
@@ -118,4 +97,76 @@
             </tr>
         </tbody>
     </table>
+    <hr/>
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>New Event</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <form method="get" class="form-horizontal" ng-submit="saveEvent()">
+                            <div class="row">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Name</label>
+                                <div class="col-sm-10">
+                                    <input type="text" ng-model="newEvent.name" class="form-control"><span class="help-block m-b-none">This is the title of your event that will appear on the slide.</span>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Date</label>
+                                <div class="col-sm-4">
+                                    <p class="input-group">
+                                        <input type="text" ng-model="newEvent.date" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                                        <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+                                    </p>
+                                </div>
+                                <label class="col-sm-2 control-label">Time</label>
+                                <div class="col-sm-4">
+                                        <timepicker ng-model="newEvent.time" ng-change="changed()" hour-step="1" minute-step="5" show-meridian="ismeridian"></timepicker>
+                                </div>
+                            </div>
+                                                        <div class="hr-line-dashed"></div>
+
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-2">
+                                <button class="btn btn-white" type="submit">Cancel</button>
+                                <button class="btn btn-primary" type="submit">Save changes</button>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row animated fadeInRight">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Upcoming Events</h5>
+                    </div>
+                    <div class="ibox-content inspinia-timeline">
+                        <div class="timeline-item">
+                            <div class="row">
+                                <div class="col-xs-6 content no-top-border">
+                                    <h2>Meeting</h2>
+                                    <medium style="text-navy">Monday July 25, 2015</medium>
+                                    <br/>
+                                    <medium class="text-navy">9:00pm</medium>
+                                </div>
+                                <div class="col-xs-3 date">
+                                    <a ng-click="closebox()"><i class="fa fa-times fa-3x deletex"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
