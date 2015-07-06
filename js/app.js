@@ -7,7 +7,8 @@
         'ui.router',                    // Routing
         'oc.lazyLoad',                  // ocLazyLoad
         'ui.bootstrap',                 // Ui Bootstrap
-        'firebase'
+        'firebase',
+        'naif.base64'
     ])
 })();
 

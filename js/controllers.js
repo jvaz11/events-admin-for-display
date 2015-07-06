@@ -15,7 +15,7 @@ function MainCtrl() {
 };
 
 
-function SampleController($scope, $firebaseArray, $location, $log, $filter) {
+function SampleController($scope, $firebaseArray, $location, $log, $filter, $http, $window, $rootScope) {
     // Firebase reference
     var ref = new Firebase("https://eventsboard.firebaseio.com/boards");
     // Create a synchronized array
@@ -160,6 +160,8 @@ function SampleController($scope, $firebaseArray, $location, $log, $filter) {
         newEvent.datetime = dtstring.getTime();
         newEvent.datetimestring = $scope.datetimestring;
 
+        newEvent.src = "images/img6.jpg";
+
 
         // newEvent.date = $scope.newEvent.date.toString();
         // newEvent.fullDate = $filter('date')($scope.newEvent.date, 'fullDate');
@@ -174,6 +176,22 @@ function SampleController($scope, $firebaseArray, $location, $log, $filter) {
 
 
     };
+
+    // File picker
+    $scope.onChange = function(e, fileList) {
+        alert('this is on-change handler!');
+    };
+
+    $scope.onLoad = function(e, reader, file, fileList, fileOjects, fileObj) {
+        alert('this is handler for file reader onload event!');
+    };
+
+    var uploadedCount = 0;
+
+    $scope.files = [];
+
+    // end file picker
+
 
     $scope.remove = function(event) {
 
@@ -206,7 +224,7 @@ function SampleController($scope, $firebaseArray, $location, $log, $filter) {
         }
     };
 
-    /**
+    /** 
      * Error handling function, displays the error returned from any call
      * @param error
      */

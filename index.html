@@ -67,6 +67,7 @@ window["_gaUserPrefs"] = {
 <!-- Main controller with serveral data used in Inspinia theme on diferent view -->
 
 <body ng-controller="MainCtrl">
+
     <!-- Main view  -->
     <div ui-view></div>
     <!-- jQuery and Bootstrap -->
@@ -87,6 +88,7 @@ window["_gaUserPrefs"] = {
     <script src="js/plugins/oclazyload/dist/ocLazyLoad.min.js"></script>
     <script src="js/ui-router/angular-ui-router.min.js"></script>
  // <script src="js/bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="js/angular-base64-upload.js"></script>
  <!-- // <script src="js/angular/angular-strap.min.js"></script> -->
  <!-- // <script src="js/angular/angular-strap.tpl.min.js"></script> -->
 
@@ -104,6 +106,9 @@ window["_gaUserPrefs"] = {
     <script src="js/config.js"></script>
     <script src="js/directives.js"></script>
     <script src="js/controllers.js"></script>
+
+
+    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
 </body>
 
 </html>
