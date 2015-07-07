@@ -1,52 +1,12 @@
-/**
- * INSPINIA - Responsive Admin Theme
- *
- */
+function MainCtrl($scope, $firebaseArray, $location, $log, $filter, $http, $window, $rootScope) {
+    // Get boardId from asset object (hardcode during dev)
+    var boardid = '-JssmYghOvSlhrrNUHEc';
+    var eventsRef = new Firebase("https://eventsboard.firebaseio.com/boards/" + boardid + "/slides");
+    $scope.events = $firebaseArray(eventsRef);
+    var events = $scope.events;
 
-/**
- * MainCtrl - controller
- */
-function MainCtrl() {
-
-    this.userName = 'Example user';
-    this.helloText = 'Welcome in SeedProject';
-    this.descriptionText = 'It is an application skeleton for a typical AngularJS web app. You can use it to quickly bootstrap your angular webapp projects and dev environment for these projects.';
-
-};
-
-
-function SampleController($scope, $firebaseArray, $location, $log, $filter, $http, $window, $rootScope) {
-    // Firebase reference
-    var ref = new Firebase("https://eventsboard.firebaseio.com/boards");
-    // Create a synchronized array
-    var boards = $firebaseArray(ref);
-    // Add a board
-    $scope.createBoard = function() {
-        boards.$add({
-                name: $scope.newBoardName
-            })
-            .then(function(ref) {
-                // Get Firebase key
-                var boardid = ref.key();
-                // Log success
-                console.log("added record with id " + id);
-                // Give scope the ID
-
-                // Keep board ID to generate unique URL for this board
-
-                // Generate 'url' property for asset object. Use AngularFire + route params
-                $scope.page.Value.Url = "https://upcomingevents.firebaseapp.com/#/display/" + boardid;
-                $scope.page.Value.boardid = boardid;
-                console.log("Set url to " + $scope.page.Value.Url);
-
-                // Give the scope the configured board's object as an array. If this value is true, the dom will hide the new board name input field. 
-                // $scope.configuredBoard = newBoardId;
-                // Save new asset (this was originally called in the config view.)
-                // Comment out this function call during dev
-                // $scope.save();
-            });
-    };
-
+    // Start event creator
+    
     // new event object
     $scope.newEvent = {
         name: "",
@@ -55,53 +15,33 @@ function SampleController($scope, $firebaseArray, $location, $log, $filter, $htt
     };
 
 
-
-
-
-    // timepicker
-
-    $scope.newEvent.time = new Date();
-
-
-    $scope.hstep = 1;
-    $scope.mstep = 15;
-
-    $scope.options = {
-        hstep: [1, 2, 3],
-        mstep: [1, 5, 10, 15, 25, 30]
+    $scope.saveEvent = function(event) {
+        var newEvent = {};
+        newEvent.name = $scope.newEvent.name;
+        var newtime = $scope.newEvent.time;
+        newEvent.time = newtime.getTime();
+        var newdate = $scope.newEvent.date;
+        newEvent.date = newdate.getTime();
+        var dtstring = getDateTime();
+        newEvent.datetime = dtstring.getTime();
+        newEvent.datetimestring = $scope.datetimestring;
+        newEvent.src = $scope.file.base64;
+        newEvent.format = $scope.file.filetype;
+        events.$add(newEvent);
+        $scope.newEvent.date = new Date();
+        $scope.newEvent.time = new Date();
+        $scope.newEvent.name = '';
+        $scope.file = false;
+        $('#fileMobile').val('');
     };
 
-    $scope.ismeridian = true;
-    $scope.toggleMode = function() {
-        $scope.ismeridian = !$scope.ismeridian;
+    $scope.remove = function(event) {
+
+        $scope.events.$remove(event);
     };
 
-    $scope.update = function() {
-        var d = new Date();
-        d.setHours(14);
-        d.setMinutes(0);
-        $scope.newEvent.time = d;
-    };
 
-    $scope.changed = function() {
-        $log.log('Time changed to: ' + $scope.newEvent.time);
-    };
-
-    $scope.clear = function() {
-        $scope.newEvent.time = null;
-    };
-    // Add events/slides to a board ***
-
-    // get boardId from asset object (hardcode during dev)
-    var boardid = '-JssmYghOvSlhrrNUHEc';
-
-    var eventsRef = new Firebase("https://eventsboard.firebaseio.com/boards/" + boardid + "/slides");
-
-    $scope.events = $firebaseArray(eventsRef);
-
-    var events = $scope.events;
-
-
+    // transform date objects for Firebase
     var getDateTime = function() {
         var date = $scope.newEvent.date;
         var newdate = new Date(date);
@@ -113,69 +53,20 @@ function SampleController($scope, $firebaseArray, $location, $log, $filter, $htt
         var hour = newtime.getHours();
         if (hour < 10)
             hour = "0" + hour;
-
         var min = newtime.getMinutes();
         if (min < 10)
             min = "0" + min;
-
         var sec = newtime.getSeconds();
         if (sec < 10)
             sec = "0" + sec;
-
         var datestring = month + '/' + day + '/' + year;
         var timestring = hour + ':' + min + ':' + sec + ' GMT-0700 (PDT)';
-
-
-
         var datetimestring = datestring + ' ' + timestring;
-
         $scope.datetimestring = datetimestring;
-
         datetimestring = new Date(datetimestring);
-
         return datetimestring;
-
-        datestring = $filter('date')(datetimestring, 'EEE MMM dd yyyy');
-        timestring = $filter('date')(datetimestring, 'hh:mm:ss');
-
-
-
-
-
-
-        console.log(month + '/' + day + '/' + year + ' ' + hour + ':' + min + ':' + sec);
     };
 
-
-
-    $scope.saveEvent = function(event) {
-        // $scope.event.date = 
-        var newEvent = {};
-        newEvent.name = $scope.newEvent.name;
-        var newtime = $scope.newEvent.time;
-        newEvent.time = newtime.getTime();
-        var newdate = $scope.newEvent.date;
-        newEvent.date = newdate.getTime();
-        var dtstring = getDateTime();
-        newEvent.datetime = dtstring.getTime();
-        newEvent.datetimestring = $scope.datetimestring;
-
-        newEvent.src = "images/img6.jpg";
-
-
-        // newEvent.date = $scope.newEvent.date.toString();
-        // newEvent.fullDate = $filter('date')($scope.newEvent.date, 'fullDate');
-        // newEvent.dateTime = $filter('date')($scope.newEvent.date, 'yyyy-MM-dd');
-        // newEvent.src = "http://i.imgur.com/zcdzHup.jpg?1";
-        events.$add(newEvent);
-
-        $scope.newEvent.date = new Date();
-        $scope.newEvent.time = new Date();
-        $scope.newEvent.name = '';
-
-
-
-    };
 
     // File picker
     $scope.onChange = function(e, fileList) {
@@ -192,16 +83,71 @@ function SampleController($scope, $firebaseArray, $location, $log, $filter, $htt
 
     // end file picker
 
+    // timepicker
+    $scope.newEvent.time = new Date();
+    $scope.hstep = 1;
+    $scope.mstep = 15;
+    $scope.options = {
+        hstep: [1, 2, 3],
+        mstep: [1, 5, 10, 15, 25, 30]
+    };
+    $scope.ismeridian = true;
+    $scope.toggleMode = function() {
+        $scope.ismeridian = !$scope.ismeridian;
+    };
+    $scope.update = function() {
+        var d = new Date();
+        d.setHours(14);
+        d.setMinutes(0);
+        $scope.newEvent.time = d;
+    };
+    $scope.changed = function() {
+        $log.log('Time changed to: ' + $scope.newEvent.time);
+    };
+    $scope.clear = function() {
+        $scope.newEvent.time = null;
+    };
+    // end timepicker
 
-    $scope.remove = function(event) {
 
-        $scope.events.$remove(event);
+    // datepicker 
+
+    $scope.today = function() {
+        $scope.newEvent.date = new Date();
+    };
+    $scope.today();
+
+    $scope.clear = function() {
+        $scope.newEvent.date = null;
     };
 
+    $scope.toggleMin = function() {
+        $scope.minDate = $scope.minDate ? null : new Date();
+    };
+    $scope.toggleMin();
+
+    $scope.open = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        $scope.opened = true;
+    };
+
+    $scope.dateOptions = {
+        formatYear: 'yy',
+        startingDay: 1
+    };
+
+    var tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    var afterTomorrow = new Date();
+    afterTomorrow.setDate(tomorrow.getDate() + 2);
+
+    // end datePicker
+
+    //start Enplug SDK
     $scope.assets = []; //Setting assets to a sane default, assets come as an array of objects
-
     $scope.account = null; //Setting a sane default, account comes an object.
-
     $scope.showAdvanced = false; //Sane default for the show advanced value, used to hide/show form fields.
 
     /**
@@ -223,6 +169,39 @@ function SampleController($scope, $firebaseArray, $location, $log, $filter, $htt
             JavascriptOnload: '' // Custom JS to be executed once the page loads, can be used to log into authenticated pages.
         }
     };
+
+    // Firebase reference
+    var ref = new Firebase("https://eventsboard.firebaseio.com/boards");
+    // Create a synchronized array
+    var boards = $firebaseArray(ref);
+    // Add a board
+    $scope.createBoard = function() {
+        boards.$add({
+                name: $scope.newBoardName
+            })
+            .then(function(ref) {
+                // Get Firebase key
+                var boardid = ref.key();
+                // Log success
+                console.log("added record with id " + id);
+                // Give scope the ID
+
+
+                // Keep board ID to generate unique URL for this board
+
+                // Generate 'url' property for asset object. Use AngularFire + route params
+                $scope.page.Value.Url = "https://upcomingevents.firebaseapp.com/#/display/" + boardid;
+                $scope.page.Value.boardid = boardid;
+                console.log("Set url to " + $scope.page.Value.Url);
+
+                // Give the scope the configured board's object as an array. If this value is true, the dom will hide the new board name input field. 
+                // $scope.configuredBoard = newBoardId;
+                // Save new asset (this was originally called in the config view.)
+                // Comment out this function call during dev
+                // $scope.save();
+            });
+    };
+
 
     /** 
      * Error handling function, displays the error returned from any call
@@ -291,50 +270,6 @@ function SampleController($scope, $firebaseArray, $location, $log, $filter, $htt
      */
     // $scope.getAccount();
     // $scope.getAssets();
-
-
-    // datepicker 
-
-    $scope.today = function() {
-        $scope.newEvent.date = new Date();
-    };
-    $scope.today();
-
-    $scope.clear = function() {
-        $scope.newEvent.date = null;
-    };
-
-    // Disable weekend selection
-    // $scope.disabled = function(date, mode) {
-    //   return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
-    // };
-
-    $scope.toggleMin = function() {
-        $scope.minDate = $scope.minDate ? null : new Date();
-    };
-    $scope.toggleMin();
-
-    $scope.open = function($event) {
-        $event.preventDefault();
-        $event.stopPropagation();
-
-        $scope.opened = true;
-    };
-
-    $scope.dateOptions = {
-        formatYear: 'yy',
-        startingDay: 1
-    };
-
-    // $scope.format = 'MM/dd/yyyy';
-
-    var tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    var afterTomorrow = new Date();
-    afterTomorrow.setDate(tomorrow.getDate() + 2);
-
-
-
 };
 
 
@@ -342,4 +277,3 @@ function SampleController($scope, $firebaseArray, $location, $log, $filter, $htt
 angular
     .module('eventsBoard')
     .controller('MainCtrl', MainCtrl)
-    .controller('SampleController', SampleController)
