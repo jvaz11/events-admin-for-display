@@ -3,7 +3,6 @@ function AuthCtrl($scope, $location, toaster, Auth) {
 
   if(Auth.signedIn()) {
     console.log(Auth);
-    $location.path('/events');
   }
 
     $scope.register = function(user) {          
@@ -44,7 +43,7 @@ function AuthCtrl($scope, $location, toaster, Auth) {
   $scope.logout = function() {    
     Auth.logout();    
     toaster.pop('success', "Logged out successfully");
-    $location.path('/login');
+    $location.path('login');
   };
 
     function errMessage(err) {
