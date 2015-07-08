@@ -1,4 +1,4 @@
-function MainCtrl($scope, $firebaseArray, $location, $log, $filter, $http, $window, $rootScope) {
+function MainCtrl($scope, $firebaseArray, $location, $log, $filter, $http, $window, $rootScope, $firebaseAuth, Auth) {
     // Get boardId from asset object (hardcode during dev)
     var boardid = '-JssmYghOvSlhrrNUHEc';
     var eventsRef = new Firebase("https://eventsboard.firebaseio.com/boards/" + boardid + "/slides");
@@ -6,7 +6,7 @@ function MainCtrl($scope, $firebaseArray, $location, $log, $filter, $http, $wind
     var events = $scope.events;
 
     // Start event creator
-    
+
     // new event object
     $scope.newEvent = {
         name: "",
@@ -270,9 +270,8 @@ function MainCtrl($scope, $firebaseArray, $location, $log, $filter, $http, $wind
      */
     // $scope.getAccount();
     // $scope.getAssets();
+
 };
-
-
 
 angular
     .module('eventsBoard')

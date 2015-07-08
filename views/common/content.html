@@ -2,21 +2,56 @@
 <div id="wrapper">
 
     <!-- Navigation -->
-    <div ng-include="'views/common/navigation.html'"></div>
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul side-navigation class="nav metismenu" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element" dropdown>
+                    <a class="dropdown-toggle" dropdown-toggle href>
+                        <span>
+                                <div class="text-center">
+                <h2>Events Board</h2>
+                <a href="#" ng-click="authObj.$unauth()">Logout</a>
+            </div>
+                            </span>
+                    </a>
+                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li><a href="">Logout</a></li>
+                    </ul>
+                </div>
+                <div class="logo-element">
+                    IN+
+                </div>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="index.events"><i class="glyphicon glyphicon-calendar"></i> <span class="nav-label">Events</span></a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="index.display"><i class="fa fa-desktop"></i> <span class="nav-label">Display</span> </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="index.settings"><i class="fa fa-gears"></i> <span class="nav-label">Settings</span> </a>
+            </li>
+        </ul>
+    </div>
+</nav>
 
     <!-- Page wraper -->
     <!-- ng-class with current state name give you the ability to extended customization your view -->
     <div id="page-wrapper" class="gray-bg {{$state.current.name}}">
 
         <!-- Page wrapper -->
-        <div ng-include="'views/common/topnavbar.html'"></div>
-
+<div class="row border-bottom">
+    <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <span minimaliza-sidebar></span>
+</div>
+    </nav>
+</div>
         <!-- Main view  -->
         <div ui-view></div>
 
         <!-- Footer -->
-        <div ng-include="'views/common/footer.html'"></div>
-
     </div>
     <!-- End page wrapper-->
 

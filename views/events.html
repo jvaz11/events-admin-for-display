@@ -1,85 +1,89 @@
-<div class="wrapper wrapper-content animated fadeInRight">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="m-t-lg">
-                <h1>
-                    Events Dashboard - test branch
+<div ng-include="'views/common/navigation.html'">
+</div>
+<div id="page-wrapper" class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="m-t-lg">
+                    <h1>
+                    Events Dashboard
                 </h1>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-10">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>New Event</h5>
-                </div>
-                <div class="ibox-content">
-                    <form method="get" class="form-horizontal" ng-submit="saveEvent()">
-                        <div class="row">
-                            <div class="form-group">
-                                <label class="col-md-2 col-lg-2 control-label">Name</label>
-                                <div class="col-md-10 col-lg-10">
-                                    <input type="text" ng-model="newEvent.name" class="form-control"><span class="help-block m-b-none">This is the title of your event that will appear on the slide.</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group">
-                                <label class="col-md-2 col-lg-2 control-label">Date</label>
-                                <div class="col-md-4 col-lg-4">
-                                    <p class="input-group">
-                                        <input type="date" class="form-control" datepicker-popup="{{format}}" ng-model="newEvent.date" is-open="opened" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="false" close-text="Close" />
-                                        <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-              </span>
-                                    </p>
-                                </div>
-                                <label class="col-md-2 col-lg-2 control-label">Time</label>
-                                <div class="col-md-4 col-lg-4">
-                                    <timepicker ng-model="newEvent.time" ng-change="changed()" hour-step="1" minute-step="5" show-meridian="ismeridian"></timepicker>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group">
-                                <label class="col-md-2 col-lg-2 control-label">Image</label>
-                                <div class="col-md-10 col-lg-10">
-                                    <input type='file' id="fileMobile" ng-model='file' ng-hide="file" accept="image/*" base-sixty-four-input>
-                                    <div ng-hide="!file" id='logo' style='background:url(data:image/png;base64,{{file.base64}}); width:160px; height:90px;background-size: cover;background-repeat: no-repeat;background-position: 50% 50%;'></div>
-                                    <!-- <img img-fix-orientation="imageUrl" ng-src="data:image/png;base64,{{file.base64}}"> -->
+        <div class="row">
+            <div class="col-lg-10">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>New Event</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <form method="get" class="form-horizontal" ng-submit="saveEvent()">
+                            <div class="row">
+                                <div class="form-group">
+                                    <label class="col-md-2 col-lg-2 control-label">Name</label>
+                                    <div class="col-md-10 col-lg-10">
+                                        <input type="text" ng-model="newEvent.name" class="form-control"><span class="help-block m-b-none">This is the title of your event that will appear on the slide.</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group">
-                                    <div class="col-md-12 col-lg-12">
-                                        <button type="submit" class="btn btn-success pull-right" style="margin-right: 40px" type="submit">Save</button>
+                                    <label class="col-md-2 col-lg-2 control-label">Date</label>
+                                    <div class="col-md-4 col-lg-4">
+                                        <p class="input-group">
+                                            <input type="date" class="form-control" datepicker-popup="{{format}}" ng-model="newEvent.date" is-open="opened" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="false" close-text="Close" />
+                                            <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+                                        </p>
+                                    </div>
+                                    <label class="col-md-2 col-lg-2 control-label">Time</label>
+                                    <div class="col-md-4 col-lg-4">
+                                        <timepicker ng-model="newEvent.time" ng-change="changed()" hour-step="1" minute-step="5" show-meridian="ismeridian"></timepicker>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <label class="col-md-2 col-lg-2 control-label">Image</label>
+                                    <div class="col-md-10 col-lg-10">
+                                        <input type='file' id="fileMobile" ng-model='file' ng-hide="file" accept="image/*" base-sixty-four-input>
+                                        <div ng-hide="!file" id='logo' style='background:url(data:image/png;base64,{{file.base64}}); width:160px; height:90px;background-size: cover;background-repeat: no-repeat;background-position: 50% 50%;'></div>
+                                        <!-- <img img-fix-orientation="imageUrl" ng-src="data:image/png;base64,{{file.base64}}"> -->
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-12 col-lg-12">
+                                            <button type="submit" class="btn btn-success pull-right" style="margin-right: 40px" type="submit">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    </form>
                 </div>
-                </form>
             </div>
         </div>
-    </div>
-    <div class="row animated fadeInRight">
-        <div class="col-lg-10">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>Upcoming Events</h5>
-                </div>
-                <div class="ibox-content inspinia-timeline">
-                    <div class="timeline-item" ng-repeat="event in events | orderBy:'datetime':false">
-                        <div class="row" style="margin-left: 0px">
-                            <div class="col-xs-6 content no-top-border">
-                                <h2>{{ event.name }}</h2>
-                                <medium style="text-navy">{{ event.datetime | date:"fullDate"}}</medium>
-                                <br/>
-                                <medium class="text-navy">{{ event.datetime | date:"hh:mm a"}}</medium>
-                            </div>
-                            <div class="col-xs-3 date pull-right">
-                                <a ng-click="remove(event)"><i class="fa fa-times fa-3x deletex"></i></a>
+        <div class="row animated fadeInRight">
+            <div class="col-lg-10">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Upcoming Events</h5>
+                    </div>
+                    <div class="ibox-content inspinia-timeline">
+                        <div class="timeline-item" ng-repeat="event in events | orderBy:'datetime':false">
+                            <div class="row" style="margin-left: 0px">
+                                <div class="col-xs-6 content no-top-border">
+                                    <h2>{{ event.name }}</h2>
+                                    <medium style="text-navy">{{ event.datetime | date:"fullDate"}}</medium>
+                                    <br/>
+                                    <medium class="text-navy">{{ event.datetime | date:"hh:mm a"}}</medium>
+                                </div>
+                                <div class="col-xs-3 date pull-right">
+                                    <a ng-click="remove(event)"><i class="fa fa-times fa-3x deletex"></i></a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -87,5 +91,3 @@
             </div>
         </div>
     </div>
-</div>
-</div>
