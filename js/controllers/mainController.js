@@ -4,7 +4,14 @@ function MainCtrl($scope, $firebaseArray, $location, $log, $filter, $http, $wind
     var ref = new Firebase(FURL);
     $scope.user = Auth.user;
     var uid = $scope.user.uid;
-    $scope.sdkInfo = btoa(uid);
+    
+    var sdkInfo = function(){
+        var encodedId = btoa(uid);
+        var slicedId = encodedId.slice(0,-1);
+        return slicedId;
+    };
+    $scope.sdkInfo = sdkInfo();
+    $scope.testDecode = atob($scope.sdkInfo);
 
     // Get boardId from asset object (hardcode during dev)
     var eventsRef = $firebaseArray(ref.child('profiles').child(uid).child('slides'));
