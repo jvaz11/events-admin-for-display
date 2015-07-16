@@ -45,6 +45,10 @@ function config($routeProvider) {
         templateUrl: 'views/login.html',
         controller: 'AuthCtrl'
       })
+      .when('/sdkconfig', {
+        templateUrl: 'views/enplugsdkconfig.html',
+        controller: 'SdkCtrl'
+      })
       .when('/events', {
         templateUrl: 'views/events.html',
         controller: 'MainCtrl',
@@ -53,7 +57,7 @@ function config($routeProvider) {
             return Auth.requireAuth();
           }
         }
-      })
+      })      
       .otherwise({
         redirectTo: '/'
       });
