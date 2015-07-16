@@ -8,14 +8,18 @@ var Auth = {
 		user: {},
 
     createProfile: function(uid, user) {
+      var d = new Date(); 
+      var tid = d.getTime();
       var profile = {
-      	uid: uid,
+        uid: uid,
+      	tid: tid,
         name: user.name,
-        email: user.email      
-      };
+        email: user.email
+        };      
+     
 
       var profileRef = new Firebase("https://eventsboard.firebaseio.com/profiles");
-      return profileRef.set(profile, function(error) {
+      return profileRef.child(uid).set(profile, function(error) {
       if (error) {
         console.log("Error:", error);
       } else {
@@ -23,10 +27,6 @@ var Auth = {
       }
     });
     },
-
-
-
-
 
     getProfile: function(uid) {
       return $firebaseObject(ref.child('profiles').child(uid));

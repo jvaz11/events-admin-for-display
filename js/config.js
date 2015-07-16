@@ -12,7 +12,12 @@ function config($routeProvider) {
     $routeProvider      
       .when('/', {
         templateUrl: 'views/events.html',
-        controller: 'MainCtrl'     
+        controller: 'MainCtrl',
+        resolve: {
+          currentAuth: function(Auth) {
+            return Auth.requireAuth();
+          }
+        }     
       })
       .when('/display', {
         templateUrl: 'views/display.html',
@@ -58,3 +63,4 @@ function config($routeProvider) {
     .module('eventsBoard')
     .config(config)
     .run(run)
+    

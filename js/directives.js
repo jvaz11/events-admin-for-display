@@ -105,6 +105,18 @@ function minimalizaSidebar($timeout) {
 };
 
 
+function selectOnClick($window) {
+    // Linker function
+    return function (scope, element, attrs) {
+      element.bind('click', function () {
+
+        if (!$window.getSelection().toString()) {
+          this.setSelectionRange(0, this.value.length)
+        }
+      });
+    };
+  };
+
 
 /**
  *
@@ -116,3 +128,4 @@ angular
     .directive('sideNavigation', sideNavigation)
     .directive('iboxTools', iboxTools)
     .directive('minimalizaSidebar', minimalizaSidebar)
+    .directive('selectOnClick', selectOnClick)
