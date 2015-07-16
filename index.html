@@ -63,21 +63,19 @@ window["_gaUserPrefs"] = {
     <link href="css/animate.css" rel="stylesheet">
     <link id="loadBefore" href="css/style.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/0.4.15/toaster.min.css" rel="stylesheet" />
-
 </head>
 
 <body>
     <!-- Main view  -->
     <div id="wrapper">
         <!-- Navigation -->
-    <toaster-container toaster-options="{'time-out': 3000, 'close-button':true}"></toaster-container>
+        <toaster-container toaster-options="{'time-out': 3000, 'close-button':true}"></toaster-container>
         <!-- Page wraper -->
         <!-- ng-class with current state name give you the ability to extended customization your view -->
-            <!-- Page wrapper -->
-       
-            <!-- Main view  -->
-            <div ng-view></div>
-            <!-- Footer -->
+        <!-- Page wrapper -->
+        <!-- Main view  -->
+        <div ng-view></div>
+        <!-- Footer -->
         <!-- End page wrapper-->
     </div>
     <!-- End wrapper    <!-- jQuery and Bootstrap -->
@@ -103,7 +101,9 @@ window["_gaUserPrefs"] = {
     <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
     <!-- AngularFire -->
     <script src="https://cdn.firebase.com/libs/angularfire/1.1.1/angularfire.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/0.4.15/toaster.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/0.4.15/toaster.min.js"></script>
+    // <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-clip/0.2.6/ng-clip.min.js"></script>
+
     <!-- Enplug -->
     <!--  <script src="js/angular-enplug.js"></script> -->
     <!-- Anglar App Script -->
@@ -113,9 +113,6 @@ window["_gaUserPrefs"] = {
     <script src="js/controllers/mainController.js"></script>
     <script src="js/controllers/authController.js"></script>
     <script src="js/services.js"></script>
-    <script>
-    document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
-    </script>
 </body>
 
 </html>

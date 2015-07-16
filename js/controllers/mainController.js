@@ -1,10 +1,25 @@
 function MainCtrl($scope, $firebaseArray, $location, $log, $filter, $http, $window, $rootScope, $firebaseAuth, Auth) {
+
+    var FURL = 'https://eventsboard.firebaseio.com';
+    var ref = new Firebase(FURL);
+    $scope.user = Auth.user;
+    var uid = $scope.user.uid;
+    $scope.sdkInfo = btoa(uid);
+
     // Get boardId from asset object (hardcode during dev)
-    var boardid = '-JssmYghOvSlhrrNUHEc';
-    var eventsRef = new Firebase("https://eventsboard.firebaseio.com/boards/" + boardid + "/slides");
-    $scope.events = $firebaseArray(eventsRef);
+    var eventsRef = $firebaseArray(ref.child('profiles').child(uid).child('slides'));
+    $scope.getSlides = function(){
+        if (eventsRef !== null) {
+            $scope.events = eventsRef;
+        }
+    };
+
+    $scope.getSlides();
+
     var events = $scope.events;
 
+    //Display: $scope.eventsBoardId
+    
     // Start event creator
 
     // new event object
@@ -27,7 +42,7 @@ function MainCtrl($scope, $firebaseArray, $location, $log, $filter, $http, $wind
         newEvent.datetimestring = $scope.datetimestring;
         newEvent.src = $scope.file.base64;
         newEvent.format = $scope.file.filetype;
-        events.$add(newEvent);
+        eventsRef.$add(newEvent);
         $scope.newEvent.date = new Date();
         $scope.newEvent.time = new Date();
         $scope.newEvent.name = '';
@@ -171,7 +186,7 @@ function MainCtrl($scope, $firebaseArray, $location, $log, $filter, $http, $wind
     };
 
     // Firebase reference
-    var ref = new Firebase("https://eventsboard.firebaseio.com/boards");
+    // var ref = new Firebase("https://eventsboard.firebaseio.com/boards");
     // Create a synchronized array
     var boards = $firebaseArray(ref);
     // Add a board
