@@ -27,6 +27,10 @@ function SdkCtrl($scope, $enplug) {
         }
     };
 
+    $scope.sdkConfig = {
+
+    };
+
     /**
      * Error handling function, displays the error returned from any call
      * @param error
@@ -82,7 +86,12 @@ function SdkCtrl($scope, $enplug) {
     /**
      * If page exists, updates existing page otherwise creates new page.
      */
+
     $scope.save = function() {
+        var boardid = $scope.sdkConfig.boardKey;
+        var fullUrl = "https://upcomingevents.firebaseapp.com/#/display/" +  boardid;
+        $scope.page.Value.Url = fullUrl;
+        console.log(fullUrl);
         if ($scope.page && $scope.page.Id) {
             $enplug.updateAsset($scope.page.Id, $scope.page.Value);
         } else {
@@ -93,7 +102,7 @@ function SdkCtrl($scope, $enplug) {
 
     /**
      * Initialize by loading assets and account for immediate use in the page
-     */
+    //  */
     $scope.getAccount();
     $scope.getAssets();
 };

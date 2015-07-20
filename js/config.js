@@ -4,7 +4,7 @@ function run($rootScope, $location) {
       // and redirect the user back to the login page
       if (error === "AUTH_REQUIRED") {
         console.log("auth required error")
-        $location.path("/login");
+        $location.path("/register");
       }
     });
   }

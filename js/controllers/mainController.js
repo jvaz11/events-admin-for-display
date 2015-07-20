@@ -3,14 +3,16 @@ function MainCtrl($scope, $firebaseArray, $location, $log, $filter, $http, $wind
     var FURL = 'https://eventsboard.firebaseio.com';
     var ref = new Firebase(FURL);
     $scope.user = Auth.user;
-    var uid = $scope.user.uid;
-    
+    var uid = Auth.user.uid;
+    var displayUrlParam;
     var sdkInfo = function(){
         var encodedId = btoa(uid);
         var slicedId = encodedId.slice(0,-1);
         return slicedId;
     };
     $scope.sdkInfo = sdkInfo();
+
+
     $scope.testDecode = atob($scope.sdkInfo);
 
     // Get boardId from asset object (hardcode during dev)
@@ -294,6 +296,10 @@ function MainCtrl($scope, $firebaseArray, $location, $log, $filter, $http, $wind
     // $scope.getAssets();
 
 };
+
+
+
+
 
 angular
     .module('eventsBoard')

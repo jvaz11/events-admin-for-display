@@ -2,12 +2,21 @@
     <h3>Events Board 
             </h3>
 </section>
-
+<form ng-submit="save()">
 <div class="form-group" style="margin-bottom: 10px;">
     <div class="input-group" style="display: block;">
-        <input type="url" id="inputUrl" class="form-control" style="border-radius: 4px;" name="inputUrl" ng-model="page.Value.Url">
+        <input type="text" id="inputUrl" class="form-control" style="border-radius: 4px;" name="inputUrl" ng-model="sdkConfig.boardKey">
     </div>
 </div>
-<div class="panel" ng-hide="assets.length === 0">Events Board is set up! Go to <a href="https://eventsboard.firebaseapp.com">eventsboard.firebaseapp.com</a> and add events to see them on your display.</div>
+<div class="panel" ng-show="page.Value.Url">Events Board is set up! Go to <a href="https://eventsboard.firebaseapp.com">eventsboard.firebaseapp.com</a> and add events to see them on your display.</div>
 <button class="btn btn-danger btn-sm pull-left" ng-click="removeAsset(page.Id)">Delete</button>
-<button class="btn btn-success btn-sm" style="margin-left: 10px;" ng-click="save()">Save Changes</button>
+<button class="btn btn-success btn-sm" style="margin-left: 10px;" type="submit">Save Changes</button>
+</form>
+
+page: {{page | json}}
+
+
+page.Value: {{page.Value | json}}
+
+
+assets: {{assets | json}}
