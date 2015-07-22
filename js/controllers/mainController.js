@@ -1,13 +1,12 @@
 function MainCtrl($scope, $firebaseArray, $location, $log, $filter, $http, $window, $rootScope, $firebaseAuth, Auth) {
-
-    var FURL = 'https://eventsboard.firebaseio.com';
+    var FURL = 'https://eventsboard.firebaseio.com/profiles';
     var ref = new Firebase(FURL);
     $scope.user = Auth.user;
-    var uid = Auth.user.uid;
+    var uid = $scope.user.uid;
     var displayUrlParam;
-    var sdkInfo = function(){
+    var sdkInfo = function() {
         var encodedId = btoa(uid);
-        var slicedId = encodedId.slice(0,-1);
+        var slicedId = encodedId.slice(0, -1);
         return slicedId;
     };
     $scope.sdkInfo = sdkInfo();
@@ -16,8 +15,8 @@ function MainCtrl($scope, $firebaseArray, $location, $log, $filter, $http, $wind
     $scope.testDecode = atob($scope.sdkInfo);
 
     // Get boardId from asset object (hardcode during dev)
-    var eventsRef = $firebaseArray(ref.child('profiles').child(uid).child('slides'));
-    $scope.getSlides = function(){
+    var eventsRef = $firebaseArray(ref.child(uid).child('slides'));
+    $scope.getSlides = function() {
         if (eventsRef !== null) {
             $scope.events = eventsRef;
         }
@@ -28,7 +27,7 @@ function MainCtrl($scope, $firebaseArray, $location, $log, $filter, $http, $wind
     var events = $scope.events;
 
     //Display: $scope.eventsBoardId
-    
+
     // Start event creator
 
     // new event object
