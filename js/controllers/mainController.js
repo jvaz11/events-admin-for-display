@@ -5,12 +5,24 @@ function MainCtrl($scope, $firebaseArray, $location, $log, $filter, $http, $wind
     $scope.user = Auth.user;
     uid = Auth.user.uid;
 
-    if (uid === undefined){
+    if (uid === undefined) {
         $location.path('#/events');
         console.log('uid was undefined, changed path to #/events');
     }
 
     var eventsRef = $firebaseArray(ref.child(uid).child('slides'));
+    $scope.displayLoadingIndicator = true;
+
+    eventsRef.$loaded()
+        .then(function(x) {
+            $scope.displayLoadingIndicator = false;
+            $scope.events = eventsRef;
+            x === eventsRef; // true
+        })
+        .catch(function(error) {
+            console.log("Error:", error);
+        });
+
     $scope.getSlides = function() {
         if (eventsRef !== null) {
             $scope.events = eventsRef;
