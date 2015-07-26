@@ -186,11 +186,12 @@ input {
 #h {
 	background: url(../img/bg1.jpeg) no-repeat center top;
 	padding-top: 10px;
+	height: 100%;
 
 	text-align:center;
 	background-attachment: relative;
 	background-position: center center;
-	min-height: 650px;
+	min-height: 450px;
 	width: 100%;
 	
     -webkit-background-size: 100%;
@@ -379,5 +380,13 @@ video {
     font-size: 24px;
     font-weight: 100;
     color: #fff;
+}
+
+.landingH {
+	font-size: 45px;
+}
+
+.landingP {
+	font-weight: normal;
 }
 
