@@ -21,9 +21,9 @@
                         <form method="get" id="newEventForm" class="form-horizontal" ng-submit="saveEvent()">
                             <div class="row">
                                 <div class="form-group">
-                                    <label class="col-md-2 col-lg-2 control-label">Name</label>
+                                    <label class="col-md-2 col-lg-2 control-label">Event Title</label>
                                     <div class="col-md-10 col-lg-10">
-                                        <input type="text" ng-model="newEvent.name" class="form-control"><span class="help-block m-b-none">This is the title of your event that will appear on the slide.</span>
+                                        <input type="text" ng-model="newEvent.name" class="form-control" required>
                                     </div>
                                 </div>
                             </div>
@@ -32,7 +32,7 @@
                                     <label class="col-md-2 col-lg-2 control-label">Date</label>
                                     <div class="col-md-4 col-lg-4">
                                         <p class="input-group">
-                                            <input type="date" class="form-control" datepicker-popup="{{format}}" ng-model="newEvent.date" is-open="opened" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="false" close-text="Close" />
+                                            <input type="date" class="form-control" datepicker-popup="{{format}}" ng-model="newEvent.date" is-open="opened" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="false" close-text="Close" / required>
                                             <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
               </span>
