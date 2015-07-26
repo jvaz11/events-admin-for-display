@@ -1,11 +1,13 @@
 <div ng-include="'views/common/navigation.html'">
 </div>
-<div id="page-wrapper" class="gray-bg">
+<div class="visible-xs" ng-include="'views/common/topnavbar.html'">
+</div>
+<div id="page-wrapper" class="gray-bg"  >
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
             <div class="col-lg-12">
                 <div class=" m-t-lg">
-                    <h1>Display</h1> 
+                    <h1 style="padding-top: 20px">Display</h1> 
                     <div class="well">
                     <h3>URL</h3>
                      <a ng-href="https://upcomingevents.firebaseapp.com/#/display/{{sdkInfo}}" target="_blank">View Your Board</a> <i class="fa fa-external-link"></i>

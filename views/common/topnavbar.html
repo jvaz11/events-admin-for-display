@@ -1,7 +1,30 @@
-<div class="row border-bottom">
-    <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
-        <div class="navbar-header">
-            <span minimaliza-sidebar></span>
 
+<nav class="navbar navbar-default navbar-fixed-top x" ng-controller="AuthCtrl">
+      <div class="container">
+        <div class="navbar-header">
+          
+          <a class="navbar-brand" href="/#/">EventsBoard<small style="display: inline; font-size: 11px; font-weight: light; color: lightgrey">beta</small></a>
+
+        </div>
+        <button type="button" class="navbar-toggle collapsed pull-right" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        <div id="navbar" class="navbar-collapse collapse">
+
+          <ul class="nav navbar-nav navbar-right">
+            <li ui-sref-active="active">
+                <a href="#/events"><i class="glyphicon glyphicon-calendar"></i> <span class="nav-label">Events</span></a>
+            </li>
+            <li >
+                <a href="#/display"><i class="fa fa-desktop"></i> <span class="nav-label">Display</span> </a>
+            </li>
+ 				<li><a ng-click="logout()">Logout</a></li>
+           </ul>
+       
+        </div><!--/.nav-collapse -->
+
+      </div>
     </nav>
-</div>

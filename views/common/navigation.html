@@ -18,10 +18,10 @@
                     EB
                 </div>
             </li>
-            <li ui-sref-active="active">
+            <li ng-class="{active: $route.current.activetab == 'events'}">
                 <a href="#/events"><i class="glyphicon glyphicon-calendar"></i> <span class="nav-label">Events</span></a>
             </li>
-            <li >
+            <li ng-class="{active: $route.current.activetab == 'display'}">
                 <a href="#/display"><i class="fa fa-desktop"></i> <span class="nav-label">Display</span> </a>
             </li>
             <!-- <li >

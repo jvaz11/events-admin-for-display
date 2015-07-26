@@ -1,4 +1,5 @@
 function MainCtrl($scope, $firebaseArray, $location, $log, $filter, $http, $window, $rootScope, $firebaseAuth, Auth, toaster) {
+    
     var FURL = 'https://eventsboard.firebaseio.com/profiles';
     var ref = new Firebase(FURL);
     var uid;

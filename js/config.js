@@ -13,7 +13,7 @@ function config($routeProvider) {
     $routeProvider
         .when('/', {
             redirectTo: '/events'
-        })   
+        })
         .when('/home', {
             templateUrl: 'views/home.html',
             controller: 'AuthCtrl'
@@ -21,6 +21,7 @@ function config($routeProvider) {
         .when('/display', {
             templateUrl: 'views/display.html',
             controller: 'MainCtrl',
+            activetab: 'display',
             resolve: {
                 currentAuth: function(Auth) {
                     return Auth.requireAuth();
@@ -51,6 +52,7 @@ function config($routeProvider) {
         .when('/events', {
             templateUrl: 'views/events.html',
             controller: 'MainCtrl',
+            activetab: 'events',
             resolve: {
                 currentAuth: function(Auth) {
                     return Auth.requireAuth();

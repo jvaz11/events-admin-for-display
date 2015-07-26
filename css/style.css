@@ -50,8 +50,8 @@ h5 {
 }
 .navbar-default .nav > li > a:hover,
 .navbar-default .nav > li > a:focus {
-    /*background-color: #BBDEFB;*/
-    color: #212121;
+        background-color: #282925 !important;
+    color: white !important;
 }
 .nav .open > a,
 .nav .open > a:hover,
@@ -157,14 +157,15 @@ h5 {
 }
 .nav-header {
     padding: 33px 25px;
-    background: url("patterns/header-profile.png") no-repeat;
-}
+/*    background: url("patterns/header-profile.png") no-repeat;
+*/}
 .pace-done .nav-header {
     transition: all 0.5s;
 }
-.nav > li.active {
-    border-left: 4px solid #0e9aef;
-    background: #FFFFFF;
+.nav > li.active a {
+    /*border-left: 4px solid #0e9aef;*/
+    /*background: #FFFFFF;*/
+    color: white;
 }
 .nav.nav-second-level > li.active {
     border: none;
@@ -311,7 +312,7 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
 .navbar-fixed-top {
     background: #fff;
     transition-duration: 0.5s;
-    border-bottom: 1px solid #e7eaec !important;
+    /*border-bottom: 1px solid #e7eaec !important;*/
     z-index: 2030;
 }
 .navbar-fixed-top,
@@ -525,9 +526,9 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
     padding: 40px 0px 40px 0px;
 }
 .navbar-toggle {
-    background-color: #1ab394;
+    /*background-color: #1ab394;*/
     color: #fff;
-    padding: 6px 12px;
+    padding: 10px 12px;
     font-size: 14px;
 }
 .top-navigation .navbar-nav .open .dropdown-menu > li > a,

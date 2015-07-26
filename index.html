@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html ng-app="eventsBoard">
+<html ng-app="eventsBoard" style="
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;">
 <script type="text/javascript">
 window["_gaUserPrefs"] = {
     ioo: function() {
@@ -71,14 +73,14 @@ window["_gaUserPrefs"] = {
 
 <body>
     <!-- Main view  -->
-    <div id="wrapper">
+    <div id="wrapper" style="height: 100%;">
         <!-- Navigation -->
         <toaster-container toaster-options="{'time-out': 3000, 'close-button':true}"></toaster-container>
         <!-- Page wraper -->
         <!-- ng-class with current state name give you the ability to extended customization your view -->
         <!-- Page wrapper -->
         <!-- Main view  -->
-        <div ng-view></div>
+        <div ng-view style="height: 100%;"></div>
         <!-- Footer -->
         <!-- End page wrapper-->
     </div>

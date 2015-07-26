@@ -1,5 +1,6 @@
-function AuthCtrl($scope, $location, toaster, Auth) {
-    
+function AuthCtrl($scope, $location, $route, toaster, Auth) {
+  $scope.$route = $route;
+
 
   if(Auth.signedIn()) {
     console.log(Auth);
