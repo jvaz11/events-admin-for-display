@@ -1,7 +1,6 @@
 <div ng-include="'views/common/navigation.html'">
 </div>
 <div id="page-wrapper" class="gray-bg">
-
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
             <div class="col-lg-12">
@@ -57,13 +56,12 @@
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-12 col-lg-12">
-                                            <button type="submit" class="btn btn-success pull-right" style="margin-right: 40px" type="submit" ng-disabled="newEventForm.$invalid" >Add</button>
+                                            <button type="submit" class="btn btn-success pull-right" style="margin-right: 40px" type="submit" ng-disabled="newEventForm.$invalid">Add</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                     </div>
-
                     </form>
                 </div>
             </div>
@@ -75,6 +73,8 @@
                         <h5>Upcoming Events | <a ng-href="https://upcomingevents.firebaseapp.com/#/display/{{sdkInfo}}" target="_blank">View Your Board</a> <i class="fa fa-external-link"></i></h5>
                     </div>
                     <div class="ibox-content inspinia-timeline">
+                        <div class="text-center" ng-show="displayLoadingIndicator"><img src="img/ripple.svg" alt="Loasing slides"></div>
+                        <small ng-show="events.length == 0 && !displayLoadingIndicator">No upcoming events.</small>
                         <div class="timeline-item" ng-repeat="event in events | orderBy:'datetime':false" data-ng-init="initEvents()">
                             <div class="row" style="margin-left: 0px">
                                 <div class="col-xs-6 content no-top-border">
@@ -92,6 +92,5 @@
                 </div>
             </div>
         </div>
-            <div class="well-sm" style="color: #a7b1c2">Something broke? Try <a href="#/">clicking here</a> or <a href="#/events">here</a></div>
-
+        <div class="well-sm" style="color: #a7b1c2"><small>Something broke? Try <a href="#/">clicking here</a> or <a href="#/events">here</a></small></div>
     </div>
