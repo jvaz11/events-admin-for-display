@@ -78,7 +78,6 @@ var Auth = {
       if(Auth.user && Auth.user.profile) {
         Auth.user.profile.$destroy();
       }
-
       angular.copy({}, Auth.user);
 		}
 	});

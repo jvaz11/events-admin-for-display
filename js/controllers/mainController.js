@@ -1,20 +1,15 @@
-function MainCtrl($scope, $firebaseArray, $location, $log, $filter, $http, $window, $rootScope, $firebaseAuth, Auth) {
+function MainCtrl($scope, $firebaseArray, $location, $log, $filter, $http, $window, $rootScope, $firebaseAuth, Auth, toaster) {
     var FURL = 'https://eventsboard.firebaseio.com/profiles';
     var ref = new Firebase(FURL);
+    var uid;
     $scope.user = Auth.user;
-    var uid = $scope.user.uid;
-    var displayUrlParam;
-    var sdkInfo = function() {
-        var encodedId = btoa(uid);
-        var slicedId = encodedId.slice(0, -1);
-        return slicedId;
-    };
-    $scope.sdkInfo = sdkInfo();
+    uid = Auth.user.uid;
 
+    if (uid === undefined){
+        $location.path('#/events');
+        console.log('uid was undefined, changed path to #/events');
+    }
 
-    $scope.testDecode = atob($scope.sdkInfo);
-
-    // Get boardId from asset object (hardcode during dev)
     var eventsRef = $firebaseArray(ref.child(uid).child('slides'));
     $scope.getSlides = function() {
         if (eventsRef !== null) {
@@ -26,7 +21,17 @@ function MainCtrl($scope, $firebaseArray, $location, $log, $filter, $http, $wind
 
     var events = $scope.events;
 
-    //Display: $scope.eventsBoardId
+    //Display:
+    var sdkInfo = function() {
+        var encodedId = btoa(uid);
+        var slicedId = encodedId.slice(0, -1);
+        return slicedId;
+    };
+    $scope.sdkInfo = sdkInfo();
+
+
+
+    var displayUrlParam;
 
     // Start event creator
 
@@ -37,25 +42,51 @@ function MainCtrl($scope, $firebaseArray, $location, $log, $filter, $http, $wind
         time: new Date()
     };
 
+    var getUTF8Length = function() {
+        var string = $scope.file.base64;
+        var utf8length = 0;
+        for (var n = 0; n < string.length; n++) {
+            var c = string.charCodeAt(n);
+            if (c < 128) {
+                utf8length++;
+            } else if ((c > 127) && (c < 2048)) {
+                utf8length = utf8length + 2;
+            } else {
+                utf8length = utf8length + 3;
+            }
+        }
+        return utf8length;
+        console.log(utf8length);
+    };
 
     $scope.saveEvent = function(event) {
-        var newEvent = {};
-        newEvent.name = $scope.newEvent.name;
-        var newtime = $scope.newEvent.time;
-        newEvent.time = newtime.getTime();
-        var newdate = $scope.newEvent.date;
-        newEvent.date = newdate.getTime();
-        var dtstring = getDateTime();
-        newEvent.datetime = dtstring.getTime();
-        newEvent.datetimestring = $scope.datetimestring;
-        newEvent.src = $scope.file.base64;
-        newEvent.format = $scope.file.filetype;
-        eventsRef.$add(newEvent);
-        $scope.newEvent.date = new Date();
-        $scope.newEvent.time = new Date();
-        $scope.newEvent.name = '';
-        $scope.file = false;
-        $('#fileMobile').val('');
+        var filestring = $scope.file.base64;
+        if (getUTF8Length(filestring) > 9000000) {
+            $log.debug('too big');
+        } else {
+            var newEvent = {};
+            newEvent.name = $scope.newEvent.name;
+            var newtime = $scope.newEvent.time;
+            newEvent.time = newtime.getTime();
+            var newdate = $scope.newEvent.date;
+            newEvent.date = newdate.getTime();
+            var dtstring = getDateTime();
+            newEvent.datetime = dtstring.getTime();
+            newEvent.datetimestring = $scope.datetimestring;
+            newEvent.src = $scope.file.base64;
+            newEvent.format = $scope.file.filetype;
+            eventsRef.$add(newEvent).then(function(ref) {
+                console.log("Event added.");
+                toaster.pop('success', 'Event added!');
+            }, function(error) {
+                console.log("Error:", error);
+            });
+            $scope.newEvent.date = new Date();
+            $scope.newEvent.time = new Date();
+            $scope.newEvent.name = '';
+            $scope.file = false;
+            $('#fileMobile').val('');
+        }
     };
 
     $scope.remove = function(event) {
@@ -90,19 +121,23 @@ function MainCtrl($scope, $firebaseArray, $location, $log, $filter, $http, $wind
         return datetimestring;
     };
 
-
     // File picker
-    $scope.onChange = function(e, fileList) {
-        alert('this is on-change handler!');
+    // Reject if it is greater than 10MB
+    $scope.onChange = function() {
+        if (getUTF8Length($scope.file.base64) > 9000000) {
+            toaster.pop('error', 'Image is too big! Try something under 10MB.');
+            $('#fileMobile').val('');
+            $scope.file = false;
+        }
     };
 
     $scope.onLoad = function(e, reader, file, fileList, fileOjects, fileObj) {
-        alert('this is handler for file reader onload event!');
+        console.log('this is handler for file reader onload event!');
     };
 
-    var uploadedCount = 0;
+    // var uploadedCount = 0;
 
-    $scope.files = [];
+    // $scope.files = [];
 
     // end file picker
 
@@ -166,133 +201,7 @@ function MainCtrl($scope, $firebaseArray, $location, $log, $filter, $http, $wind
     var afterTomorrow = new Date();
     afterTomorrow.setDate(tomorrow.getDate() + 2);
 
-    // end datePicker
 
-    //start Enplug SDK
-    $scope.assets = []; //Setting assets to a sane default, assets come as an array of objects
-    $scope.account = null; //Setting a sane default, account comes an object.
-    $scope.showAdvanced = false; //Sane default for the show advanced value, used to hide/show form fields.
-
-    /**
-     * Initializing the object with known good values.
-     * It is not necessary to do this, as the ng-model in the html will create these values as applicable.
-     */
-    $scope.page = {
-        Value: {
-            ShowContent: 'url', // Show Content is used to hide/show the Url or Html form field based on the selection.
-            Url: '', // The Url the web page back-end uses to display the content.
-            Html: null, // If applicable, used to show custom HTML. Cannot be used in conjunction with the Url.
-            ShowMobile: false, //If applicable, used to display the mobile version of the URL passed in.
-            ShowDelay: null, //Custom delay between displaying the page after it's been loaded.
-            RefreshInterval: null, // Custom refresh interval rate in X seconds.
-            AllowJavascript: true, // Set to true by default, allows Javascript to be executed on the page.
-            Username: '', // Username option, would need to write script passing in credientials.
-            Password: '', // Password option, would need to write script passing in credientials.
-            Token: '', // Token option, would need to wrtie script passing in credientials.
-            JavascriptOnload: '' // Custom JS to be executed once the page loads, can be used to log into authenticated pages.
-        }
-    };
-
-    // Firebase reference
-    // var ref = new Firebase("https://eventsboard.firebaseio.com/boards");
-    // Create a synchronized array
-    var boards = $firebaseArray(ref);
-    // Add a board
-    $scope.createBoard = function() {
-        boards.$add({
-                name: $scope.newBoardName
-            })
-            .then(function(ref) {
-                // Get Firebase key
-                var boardid = ref.key();
-                // Log success
-                console.log("added record with id " + id);
-                // Give scope the ID
-
-
-                // Keep board ID to generate unique URL for this board
-
-                // Generate 'url' property for asset object. Use AngularFire + route params
-                $scope.page.Value.Url = "https://upcomingevents.firebaseapp.com/#/display/" + boardid;
-                $scope.page.Value.boardid = boardid;
-                console.log("Set url to " + $scope.page.Value.Url);
-
-                // Give the scope the configured board's object as an array. If this value is true, the dom will hide the new board name input field. 
-                // $scope.configuredBoard = newBoardId;
-                // Save new asset (this was originally called in the config view.)
-                // Comment out this function call during dev
-                // $scope.save();
-            });
-    };
-
-
-    /** 
-     * Error handling function, displays the error returned from any call
-     * @param error
-     */
-    function handleError(error) {
-        window.alert('There was an error! ' + error);
-    };
-
-    /**
-     * Toggles the advanced options, flips value for ng-show/hide within the form
-     */
-    $scope.toggleAdvanced = function() {
-        $scope.showAdvanced = !$scope.showAdvanced;
-    };
-
-    /**
-     * Loads the account information. $scope value set to it's response so the object's properties are available in the HTML
-     */
-    $scope.getAccount = function() {
-        $enplug.getAccount(function(account) {
-            console.log('Loaded account:', account);
-            $scope.account = account;
-        }, handleError);
-    };
-
-    /**
-     * Loads the asssets for the application. Since this is a webpage extension, we only want to create a single 'page' asset.
-     * Think of this page as the web-page(url, refresh rate, etc) you are passing to be displayed. You do not want to create a new page everytime but
-     * rather you want to update the existing page.
-     */
-    $scope.getAssets = function() {
-        $enplug.getAssets(function(assets) {
-            console.log('Loaded assets:', assets);
-            if (assets.length) {
-                $scope.page = assets[0];
-                $scope.page.Value = assets[0].Value;
-            }
-        }, handleError);
-    };
-
-    /**
-     * Removes the asset completely. Used if the user wants to clear all data rather than updating existing asset.
-     * @param assetId
-     */
-    $scope.removeAsset = function(assetId) {
-        $enplug.removeAsset(assetId, function() {
-            console.log('Removed asset.');
-            $scope.getAssets();
-        }, handleError)
-    };
-
-    /**
-     * If page exists, updates existing page otherwise creates new page.
-     */
-    $scope.save = function() {
-        if ($scope.page && $scope.page.Id) {
-            $enplug.updateAsset($scope.page.Id, $scope.page.Value);
-        } else {
-            $enplug.createAsset('WebURL', $scope.page.Value);
-        }
-    };
-
-    /**
-     * Initialize by loading assets and account for immediate use in the page
-     */
-    // $scope.getAccount();
-    // $scope.getAssets();
 
 };
 
