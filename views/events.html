@@ -5,9 +5,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="m-t-lg">
-                    <h1>
-                    Events 
-                </h1>
+                   
                 </div>
             </div>
         </div>
@@ -15,7 +13,7 @@
             <div class="col-lg-10">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Add Event</h5>
+                        <h3>Add Event</h3>
                     </div>
                     <div class="ibox-content">
                         <form method="get" id="newEventForm" class="form-horizontal" ng-submit="saveEvent()">
@@ -34,7 +32,7 @@
                                         <p class="input-group">
                                             <input type="date" class="form-control" datepicker-popup="{{format}}" ng-model="newEvent.date" is-open="opened" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="false" close-text="Close" / required>
                                             <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                <button type="button" class="btn btn-default" style="font-size: 18.45px" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
               </span>
                                         </p>
                                     </div>
@@ -48,7 +46,7 @@
                                 <div class="form-group">
                                     <label class="col-md-2 col-lg-2 control-label">Image</label>
                                     <div class="col-md-10 col-lg-10">
-                                        <input type='file' id="fileMobile" ng-change="onChange()" ng-model='file' ng-hide="file" accept="image/*" base-sixty-four-input required>
+                                        <input type='file' id="fileMobile" ng-change="onChange()" ng-model='file' ng-hide="file" accept="image/*" style="border: 0px" base-sixty-four-input required>
                                         <div ng-hide="!file" id='logo' style='background:url(data:image/png;base64,{{file.base64}}); width:160px; height:90px;background-size: cover;background-repeat: no-repeat;background-position: 50% 50%;'></div>
                                         <!-- <img img-fix-orientation="imageUrl" ng-src="data:image/png;base64,{{file.base64}}"> -->
                                     </div>
@@ -70,7 +68,7 @@
             <div class="col-lg-10">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Upcoming Events | <a ng-href="https://upcomingevents.firebaseapp.com/#/display/{{sdkInfo}}" target="_blank">View Your Board</a> <i class="fa fa-external-link"></i></h5>
+                        <h3>Upcoming Events</h3>
                     </div>
                     <div class="ibox-content inspinia-timeline">
                         <div class="text-center" ng-show="displayLoadingIndicator"><img src="img/ripple.svg" alt="Loasing slides"></div>
@@ -78,7 +76,7 @@
                         <div class="timeline-item" ng-repeat="event in events | orderBy:'datetime':false" data-ng-init="initEvents()">
                             <div class="row" style="margin-left: 0px">
                                 <div class="col-xs-6 content no-top-border">
-                                    <h2>{{ event.name }}</h2>
+                                    <h4>{{ event.name }}</h4>
                                     <medium style="text-navy">{{ event.datetime | date:"fullDate"}}</medium>
                                     <br/>
                                     <medium class="text-navy">{{ event.datetime | date:"hh:mm a"}}</medium>
