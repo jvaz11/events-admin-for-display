@@ -1,20 +1,54 @@
-
-
-<div class="middle-box text-center loginscreen   animated fadeInDown">
-    <div>
-        <div>
-            <h2 class="logo-name" style="display: run-in; color: #1ab394">Events Board <small style="display: inline; font-size: 11px; font-weight: light">beta</small> </h2>
+ <! -- ********** HEADER ********** -->
+    <div id="h">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/#/">EventsBoard</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/#/register">Sign Up</a></li>
+                    <li><a href="/#/login">Log In</a></li>
+                </ul>
+            </div>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 centered" style="padding-top: 20%; padding-bottom: 20%">
+                    <h1 class="mb" style="font-size: 45px">Log In</h1>
+                    <div class="middle-box text-center loginscreen" style="padding-top: 40px" data-effect="slide-bottom">
+                        <div>
+                            <form class="m-t" role="form" ng-submit="login(user)">
+                                <div class="form-group">
+                                    <input type="email" class="form-control" placeholder="Email" ng-model="user.email" required="">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" placeholder="Password" ng-model="user.password" required="">
+                                </div>
+                                  <button type="submit" class="btn btn-lg btn-white btn-theme block full-width m-b">Log In</button>
+                            <p class="text-white text-center"><small style="color: white">Don't have an account?</small></p>
+                            <a href="/#/login" class="btn btn-success btn-theme btn-block">Sign Up</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <form class="m-t" role="form" ng-submit="login(user)">
-            <div class="form-group">
-                <input type="email" class="form-control" placeholder="Username" ng-model="user.email" required="">
-            </div>
-            <div class="form-group">
-                <input type="password" class="form-control" placeholder="Password" ng-model="user.password" required="">
-            </div>
-            <button type="submit" class="btn btn btn-white block full-width m-b">Login</button>
-            <p class="text-muted text-center"><small>Do not have an account?</small></p>
-            <a href="/#/register" class="btn btn-success btn-block">Sign Up</a>
-        </form>
+        <! --/container -->
     </div>
-</div>
+    <! --/F -->
+    <! -- ********** CREDITS ********** -->
+    <div id="c">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 centered">
+                    <p>Copyright 2015 | events.sign.buzz</p>
+                </div>
+            </div>
+        </div>
+        <! --/container -->
+    </div>
+    <!--     Theme inspired by "Sumo" @ www.blacktie.co -->

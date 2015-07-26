@@ -4,7 +4,7 @@ function run($rootScope, $location) {
         // and redirect the user back to the login page
         if (error === "AUTH_REQUIRED") {
             console.log("auth required error")
-            $location.path("/register");
+            $location.path("/home");
         }
     });
 }
@@ -12,13 +12,11 @@ function run($rootScope, $location) {
 function config($routeProvider) {
     $routeProvider
         .when('/', {
-            templateUrl: 'views/events.html',
-            controller: 'MainCtrl',
-            resolve: {
-                currentAuth: function(Auth) {
-                    return Auth.requireAuth();
-                }
-            }
+            redirectTo: '/events'
+        })   
+        .when('/home', {
+            templateUrl: 'views/home.html',
+            controller: 'AuthCtrl'
         })
         .when('/display', {
             templateUrl: 'views/display.html',
@@ -60,12 +58,7 @@ function config($routeProvider) {
             }
         })
         .otherwise({
-            redirectTo: '/',
-            resolve: {
-                currentAuth: function(Auth) {
-                    return Auth.requireAuth();
-                }
-            }
+            redirectTo: '/'
         });
 };
 
