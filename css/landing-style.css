@@ -12,9 +12,9 @@
 ################################################################# */
 
 /* Import fonts */
-@import url(http://fonts.googleapis.com/css?family=Raleway:900,700,400);
-@import url(http://fonts.googleapis.com/css?family=Oswald:900,700,400);
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&lang=en);
+@import url(https://fonts.googleapis.com/css?family=Raleway:900,700,400);
+@import url(https://fonts.googleapis.com/css?family=Oswald:900,700,400);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&lang=en);
 
 
 * { 
@@ -206,7 +206,7 @@ input {
 
 #h h1 {
 	color: white;
-	font-weight: 900;
+	font-weight: 100;
 	font-size: 60px;
 	letter-spacing: 5px;
 }
@@ -352,7 +352,7 @@ input {
 .myVideo {
     background-image: url(../img/tv2.png);
     background-repeat:no-repeat;
-       width: 534px;
+       width: 497px;
     height: 381px;
     padding-top: 7px;
     padding-left: 11px;
@@ -377,4 +377,7 @@ video {
 
 .navbar-brand {
     font-size: 24px;
+    font-weight: 100;
+    color: #fff;
 }
+
