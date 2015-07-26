@@ -2347,9 +2347,9 @@ label.error {
     -moz-box-shadow: 0 0 3px #999;
     -webkit-box-shadow: 0 0 3px #999;
     box-shadow: 0 0 3px #999;
-    opacity: .9;
-    -ms-filter: alpha(opacity=90);
-    filter: alpha(opacity=90);
+    opacity: .95;
+    -ms-filter: alpha(opacity=95);
+    filter: alpha(opacity=95);
 }
 #toast-container > :hover {
     -moz-box-shadow: 0 0 4px #999;
@@ -2364,7 +2364,7 @@ label.error {
     background-color: #1ab394;
 }
 .toast-success {
-    background-color: #1ab394;
+    background-color: #18a689 !important;
 }
 .toast-error {
     background-color: #ed5565;
