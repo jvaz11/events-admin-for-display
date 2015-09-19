@@ -36,9 +36,7 @@ function MainCtrl($scope, $firebaseArray, $location, $log, $filter, $http, $wind
 
     //Display:
     var sdkInfo = function() {
-        var encodedId = btoa(uid);
-        var slicedId = encodedId.slice(0, -1);
-        return slicedId;
+        return Auth.user.uid;
     };
     $scope.sdkInfo = sdkInfo();
 
