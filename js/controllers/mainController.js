@@ -1,10 +1,7 @@
-function MainCtrl($scope, $firebaseArray, $location, $log, $filter, $http, $window, $rootScope, $firebaseAuth, Auth, toaster) {
-    
+function MainCtrl($scope, $firebaseArray, $location, $log, $filter, $http, $window, $rootScope, $firebaseAuth, Auth, toaster, currentAuth) {
     var FURL = 'https://eventsboard.firebaseio.com/profiles';
     var ref = new Firebase(FURL);
-    var uid;
-    $scope.user = Auth.user;
-    uid = Auth.user.uid;
+    var uid = currentAuth.uid;
 
     if (uid === undefined) {
         $location.path('#/events');
@@ -35,14 +32,11 @@ function MainCtrl($scope, $firebaseArray, $location, $log, $filter, $http, $wind
     var events = $scope.events;
 
     //Display:
-    var sdkInfo = function() {
-        return Auth.user.uid;
-    };
-    $scope.sdkInfo = sdkInfo();
+    $scope.sdkInfo = uid;
 
 
 
-    var displayUrlParam;
+    // var displayUrlParam;s
 
     // Start event creator
 
