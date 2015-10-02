@@ -31,10 +31,8 @@ function MainCtrl($scope, $firebaseArray, $location, $log, $filter, $http, $wind
 
     var events = $scope.events;
 
-    //Display:
+    //Display info:
     $scope.sdkInfo = uid;
-
-
 
     // var displayUrlParam;s
 
