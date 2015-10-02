@@ -5,8 +5,7 @@
         'naif.base64',
         'ngAnimate',
         'ngRoute',
-        'toaster', 
-        'enplug'
+        'toaster'
     ])
 })();
 
